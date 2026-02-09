@@ -98,3 +98,17 @@ body::before {
 .restart-button {
     margin: 40px;
 }
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card.flipped .front-side {
+    transform: rotateY(180deg);
+    transition-delay: 0s;
+}
+
+.card.flipped .back-side {
+    transform: rotateY(0deg);
+    transition-delay: 0s;
+}
