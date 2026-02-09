@@ -95,6 +95,12 @@ body::before {
     transform: rotateY(180deg);
 }
 
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
 .restart-button {
     margin: 40px;
 }
