@@ -4,13 +4,19 @@ const cardContainer = document.querySelector(".card-container");
 const startButton = document.querySelector(".start-button");
 const restartButton = document.querySelector(".restart-button");
 const counterEl = document.querySelector("#move-counter");
+const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 let cardsData = [];
 let counter = 0;
+let timer = 0;
+let interval;
 
 function init() {
+  clearInterval(interval);
   counter = 0;
   counterEl.textContent = counter;
+  timer = 0;
+  timerEl.textContent = timer;
   fetchCardsData().then((data) => {
     cardsData = data;
     renderCards();
@@ -40,6 +46,13 @@ function renderCards() {
             `;
 
     cardElement.addEventListener("click", () => {
+      if (timer === 0) {
+        interval = setInterval(function () {
+          timerEl.textContent = timer + 1;
+          timer++;
+        }, 1000);
+      }
+
       cardElement.classList.toggle("flipped");
 
       if (!cardsData[index].isOpen) {
