@@ -41,7 +41,7 @@ function renderCards() {
     cardElement.id = `card-${card.id}`;
 
     cardElement.innerHTML = `
-                <div class="front-side"></div>
+                <div class="front-side"><img src="./frontside.jpg" alt="Frontside image" /></div>
                 <div class="back-side"><img src=${card.backside} alt=${`Backside image ${card.id}`} /></div>
             `;
 
