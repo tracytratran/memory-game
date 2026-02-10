@@ -9,10 +9,11 @@ const cards = document.querySelectorAll(".card");
 let cardsData = [];
 let counter = 0;
 let timer = 0;
-let interval;
+let intervalID, timeoutID;
 
 function init() {
-  clearInterval(interval);
+  clearInterval(intervalID);
+  // clearTimeout(timeoutID);
   counter = 0;
   counterEl.textContent = counter;
   timer = 0;
@@ -38,7 +39,7 @@ function renderCards() {
   cardsData.forEach((card, index) => {
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
-    cardElement.id = `card-${card.id}`;
+    cardElement.id = `card-${index}`;
 
     cardElement.innerHTML = `
                 <div class="front-side"><img src="./frontside.jpg" alt="Frontside image" /></div>
@@ -47,7 +48,7 @@ function renderCards() {
 
     cardElement.addEventListener("click", () => {
       if (timer === 0) {
-        interval = setInterval(function () {
+        intervalID = setInterval(function () {
           timerEl.textContent = timer + 1;
           timer++;
         }, 1000);
@@ -58,10 +59,27 @@ function renderCards() {
       if (!cardsData[index].isOpen) {
         counter++;
       }
+      counterEl.textContent = counter;
 
       cardsData[index].isOpen = !cardsData[index].isOpen;
 
-      counterEl.textContent = counter;
+      const openedCardIndex = [];
+      cardsData.forEach((card, index) => {
+        if (card.isOpen) {
+          openedCardIndex.push(index);
+        }
+      });
+      if (openedCardIndex.length === 2) {
+        timeoutID = setTimeout(function () {
+          openedCardIndex.forEach((index) => {
+            document
+              .querySelector(`#card-${index}`)
+              .classList.toggle("flipped");
+            cardsData[index].isOpen = false;
+          });
+          clearTimeout(timeoutID);
+        }, 2000);
+      }
     });
 
     cardContainer.appendChild(cardElement);
