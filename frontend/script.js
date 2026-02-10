@@ -3,10 +3,14 @@ const gameArea = document.querySelector(".game-area");
 const cardContainer = document.querySelector(".card-container");
 const startButton = document.querySelector(".start-button");
 const restartButton = document.querySelector(".restart-button");
+const counterEl = document.querySelector("#move-counter");
 const cards = document.querySelectorAll(".card");
 let cardsData = [];
+let counter = 0;
 
 function init() {
+  counter = 0;
+  counterEl.textContent = counter;
   fetchCardsData().then((data) => {
     cardsData = data;
     renderCards();
@@ -37,6 +41,14 @@ function renderCards() {
 
     cardElement.addEventListener("click", () => {
       cardElement.classList.toggle("flipped");
+
+      if (!cardsData[index].isOpen) {
+        counter++;
+      }
+
+      cardsData[index].isOpen = !cardsData[index].isOpen;
+
+      counterEl.textContent = counter;
     });
 
     cardContainer.appendChild(cardElement);
