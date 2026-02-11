@@ -118,3 +118,20 @@ body::before {
     transform: rotateY(0deg);
     transition-delay: 0s;
 }
+
+
+
+.game-info p {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    min-width: 80px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.game-info p span {
+    color: #00c6ff;
+    font-size: 1.3rem;
+}
