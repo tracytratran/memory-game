@@ -27,10 +27,14 @@ function init() {
 init();
 
 async function fetchCardsData() {
-  let data = await fetch("./cards.json");
-  let results = await data.json();
-  const shuffledCards = shuffle(double(results));
-  return shuffledCards;
+  try {
+    let data = await fetch("./cards.json");
+    let results = await data.json();
+    const shuffledCards = shuffle(double(results));
+    return shuffledCards;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function renderCards() {
@@ -47,39 +51,19 @@ function renderCards() {
             `;
 
     cardElement.addEventListener("click", () => {
-      if (timer === 0) {
-        intervalID = setInterval(function () {
-          timerEl.textContent = timer + 1;
-          timer++;
-        }, 1000);
-      }
+      maybeStartTimer();
 
       cardElement.classList.toggle("flipped");
 
-      if (!cardsData[index].isOpen) {
-        counter++;
-      }
-      counterEl.textContent = counter;
+      maybeIncreaseCounter(index);
 
       cardsData[index].isOpen = !cardsData[index].isOpen;
 
-      const openedCardIndex = [];
-      cardsData.forEach((card, index) => {
-        if (card.isOpen) {
-          openedCardIndex.push(index);
-        }
-      });
-      if (openedCardIndex.length === 2) {
-        timeoutID = setTimeout(function () {
-          openedCardIndex.forEach((index) => {
-            document
-              .querySelector(`#card-${index}`)
-              .classList.toggle("flipped");
-            cardsData[index].isOpen = false;
-          });
-          clearTimeout(timeoutID);
-        }, 2000);
-      }
+      const openCardIndex = getOpenCardsIndex();
+
+      closeUnmatchedCards(openCardIndex);
+
+      checkAndHideMatchedCards(openCardIndex);
     });
 
     cardContainer.appendChild(cardElement);
@@ -117,4 +101,45 @@ function shuffle(arr) {
     shuffledArr[randomIndex] = el;
   }
   return shuffledArr;
+}
+
+function maybeIncreaseCounter(index) {
+  if (!cardsData[index].isOpen) {
+    counter++;
+  }
+  counterEl.textContent = counter;
+}
+
+function maybeStartTimer() {
+  if (timer === 0) {
+    intervalID = setInterval(function () {
+      timerEl.textContent = timer + 1;
+      timer++;
+    }, 1000);
+  }
+}
+
+function getOpenCardsIndex() {
+  const openCardIndex = [];
+  cardsData.forEach((card, index) => {
+    if (card.isOpen) {
+      openCardIndex.push(index);
+    }
+  });
+  return openCardIndex;
+}
+
+function closeUnmatchedCards(openCardIndex) {
+  if (
+    openCardIndex.length === 2 &&
+    cardsData[openCardIndex[0]].id !== cardsData[openCardIndex[1]].id
+  ) {
+    timeoutID = setTimeout(function () {
+      openCardIndex.forEach((index) => {
+        document.querySelector(`#card-${index}`).classList.toggle("flipped");
+        cardsData[index].isOpen = false;
+      });
+      clearTimeout(timeoutID);
+    }, 1500);
+  }
 }
