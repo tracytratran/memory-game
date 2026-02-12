@@ -51,6 +51,11 @@ function renderCards() {
             `;
 
     cardElement.addEventListener("click", () => {
+      const openedCards = cardsData.filter((card) => card.isOpen);
+      if (openedCards.length === 2) {
+        return;
+      }
+
       maybeStartTimer();
 
       cardElement.classList.toggle("flipped");
