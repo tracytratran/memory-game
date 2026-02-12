@@ -145,3 +145,7 @@ body::before {
   color: #00c6ff;
   font-size: 1.3rem;
 }
+
+.visibility-hidden {
+  visibility: hidden;
+}
