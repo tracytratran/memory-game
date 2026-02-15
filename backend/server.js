@@ -38,12 +38,12 @@ db.run(`
 const app = express();
 
 const PORT = 5000;
-
+//defualt endpoint
 app.get('/', (req, res) => {
     res.send('Hello Express');
 });
 
-//Get all cards from SQLite
+//endpoint to get all cards from SQLite
 app.get('/api/cards', (req, res) => {
     db.all('SELECT * FROM cards', (err, rows) => {
         if (err) {
