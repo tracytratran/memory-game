@@ -51,6 +51,11 @@ function renderCards() {
             `;
 
     cardElement.addEventListener("click", () => {
+      const openedCards = cardsData.filter((card) => card.isOpen);
+      if (openedCards.length === 2) {
+        return;
+      }
+
       maybeStartTimer();
 
       cardElement.classList.toggle("flipped");
@@ -141,5 +146,21 @@ function closeUnmatchedCards(openCardIndex) {
       });
       clearTimeout(timeoutID);
     }, 1500);
+  }
+}
+
+function checkAndHideMatchedCards(openCardIndex) {
+  if (
+    openCardIndex.length === 2 &&
+    cardsData[openCardIndex[0]].id === cardsData[openCardIndex[1]].id
+  ) {
+    // For player to have time viewing matched cards
+    setTimeout(() => {
+      openCardIndex.forEach((index) => {
+        document
+          .querySelector(`#card-${index}`)
+          .classList.add("visibility-hidden");
+      });
+    }, 1000);
   }
 }
