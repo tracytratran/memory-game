@@ -72,8 +72,8 @@ function renderCards() {
     cardBackSideImgElement.alt = `Card backside ${index}`;
 
     // append images to the sides
-    cardFrontSideElement.appendChild(cardFrontSideImgElement)
-    cardBackSideElement.appendChild(cardBackSideImgElement)
+    cardFrontSideElement.appendChild(cardFrontSideImgElement);
+    cardBackSideElement.appendChild(cardBackSideImgElement);
 
 
     //append sides to card
