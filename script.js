@@ -6,6 +6,7 @@ const restartButton = document.querySelector(".restart-button");
 const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
+
 let cardsData = [];
 let counter = 0;
 let timer = 0;
@@ -13,11 +14,14 @@ let intervalID, timeoutID;
 
 function init() {
   clearInterval(intervalID);
-  // clearTimeout(timeoutID);
+  clearTimeout(timeoutID);
+
   counter = 0;
   counterEl.textContent = counter;
+
   timer = 0;
   timerEl.textContent = timer;
+
   fetchCardsData().then((data) => {
     cardsData = data;
     renderCards();
@@ -26,31 +30,62 @@ function init() {
 
 init();
 
+//fetch the cards
 async function fetchCardsData() {
   try {
     let data = await fetch("./cards.json");
     let results = await data.json();
+
     const shuffledCards = shuffle(double(results));
     return shuffledCards;
+
   } catch (e) {
     console.log(e);
   }
 }
 
+//render the cards
 function renderCards() {
   cardContainer.innerHTML = "";
 
   cardsData.forEach((card, index) => {
+
+    // main div
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
     cardElement.id = `card-${index}`;
 
-    cardElement.innerHTML = `
-                <div class="front-side"><img src="./frontside.jpg" alt="Frontside image" /></div>
-                <div class="back-side"><img src=${card.backside} alt=${`Backside image ${card.id}`} /></div>
-            `;
+    // front side 
+    const cardFrontSideElement = document.createElement("div");
+    cardFrontSideElement.classList.add("front-side");
+    //frontside img
+    const cardFrontSideImgElement = document.createElement("img");
+    cardFrontSideImgElement.src = "./frontside.jpg";
+    cardFrontSideImgElement.alt = "Card front side";
+
+    // back side
+    const cardBackSideElement = document.createElement("div");
+    cardBackSideElement.classList.add("back-side");
+    //backside img
+    const cardBackSideImgElement = document.createElement("img");
+    cardBackSideImgElement.src = card.backside;
+    cardBackSideImgElement.alt = `Card backside ${index}`;
+
+    // append images to the sides
+    cardFrontSideElement.appendChild(cardFrontSideImgElement)
+    cardBackSideElement.appendChild(cardBackSideImgElement)
+
+
+    //append sides to card
+    cardElement.appendChild(cardFrontSideElement);
+    cardElement.appendChild(cardBackSideElement);
 
     cardElement.addEventListener("click", () => {
+      const openedCards = cardsData.filter((card) => card.isOpen);
+      if (openedCards.length === 2) {
+        return;
+      }
+
       maybeStartTimer();
 
       cardElement.classList.toggle("flipped");
@@ -66,6 +101,7 @@ function renderCards() {
       checkAndHideMatchedCards(openCardIndex);
     });
 
+    //append to cardcontainer
     cardContainer.appendChild(cardElement);
   });
 }
@@ -76,8 +112,6 @@ startButton.addEventListener("click", () => {
 });
 
 restartButton.addEventListener("click", () => {
-  //   gameArea.classList.toggle("hidden");
-  //   mainMenu.classList.toggle("hidden");
   cardContainer.innerHTML = "";
   init();
 });
@@ -141,5 +175,21 @@ function closeUnmatchedCards(openCardIndex) {
       });
       clearTimeout(timeoutID);
     }, 1500);
+  }
+}
+
+function checkAndHideMatchedCards(openCardIndex) {
+  if (
+    openCardIndex.length === 2 &&
+    cardsData[openCardIndex[0]].id === cardsData[openCardIndex[1]].id
+  ) {
+    // For player to have time viewing matched cards
+    setTimeout(() => {
+      openCardIndex.forEach((index) => {
+        document
+          .querySelector(`#card-${index}`)
+          .classList.add("visibility-hidden");
+      });
+    }, 1000);
   }
 }
