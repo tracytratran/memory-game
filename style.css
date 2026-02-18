@@ -61,8 +61,8 @@ body::before {
 }
 
 .card {
-  width: 150px;
-  height: 150px;
+  width: 12rem;
+  height: 12rem;
   perspective: 1000px;
   cursor: pointer;
   position: relative;
@@ -141,4 +141,36 @@ body::before {
 
 .visibility-hidden {
   visibility: hidden;
+}
+
+.matched {
+  animation: flash 0.6s ease-in-out 3 forwards;
+}
+
+@keyframes flash {
+
+  0%,
+  100% {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px #00ff00;
+  }
+
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 50px #00ff00;
+  }
+}
+
+.unmatched {
+  animation: shake 0.5s ease-in-out 1;
+  box-shadow: 0 0 50px #d60101;
+}
+
+@keyframes shake {
+  
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+
 }
