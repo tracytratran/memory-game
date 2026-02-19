@@ -103,53 +103,12 @@ function renderCards() {
     cardElement.appendChild(cardFrontSideElement);
     cardElement.appendChild(cardBackSideElement);
 
-    // ==========================
-    // CARD CLICK LOGIC
-    // ==========================
-
-    cardElement.addEventListener("click", () => {
-      const openedCards = cardsData.filter((card) => card.isOpen);
-      if (openedCards.length === 2) {
-        return;
-      }
-
-      maybeStartTimer();
-
-      cardElement.classList.toggle("flipped");
-
-      maybeIncreaseCounter(index);
-
-      cardsData[index].isOpen = !cardsData[index].isOpen;
-
-      const openCardIndex = getOpenCardsIndex();
-
-      closeUnmatchedCards(openCardIndex);
-
-      checkAndHideMatchedCards(openCardIndex);
-    });
-
-    //add card to cardcontainer
     cardContainer.appendChild(cardElement);
   });
 
   cardContainer?.addEventListener("click", handleCardClick);
 }
 
-// ==========================
-// BUTTON EVENTS
-// ==========================
-
-//start game (hide menu, show game)
-startButton.addEventListener("click", () => {
-  mainMenu.classList.toggle("hidden");
-  gameArea.classList.toggle("hidden");
-});
-
-//reset game
-restartButton.addEventListener("click", () => {
-  cardContainer.innerHTML = "";
-  init();
-});
 function handleCardClick(event) {
   const card = event.target.closest(".card");
   if (!card) return;
@@ -203,23 +162,17 @@ function shuffle(arr) {
   }
   return shuffledArr;
 }
-//increase move counter only when opening new card
-function maybeIncreaseCounter(index) {
-  if (!cardsData[index].isOpen) {
-    counter++;
-  }
-  counterEl.textContent = counter;
-}
-//start timer on first card click
-function maybeStartTimer() {
-  if (timer === 0) {
+
+function startTimer() {
+  if (intervalID !== null) return;
+
+  if (intervalID === null) {
     intervalID = setInterval(function () {
       timer++;
       timerEl.textContent = timer;
     }, 1000);
   }
 }
-//get indexes of all currently opened cards
 
 function increaseCounter() {
   counter++;
@@ -235,8 +188,6 @@ function getOpenCardsIndex() {
   });
   return openCardIndex;
 }
-
-//hide cards uf they match
 function checkAndHideMatchedCards(openCardIndex) {
   if (
     openCardIndex.length === 2 &&
@@ -246,14 +197,9 @@ function checkAndHideMatchedCards(openCardIndex) {
     // For player to have time viewing matched cards
     setTimeout(() => {
       openCardIndex.forEach((index) => {
-        const card = document.querySelector(`#card-${index}`);
-
-        //add the flash effect
-        card.classList.add("matched");
-        setTimeout(() => {
-          card.classList.add("visibility-hidden");
-          card.classList.remove("matched");
-        }, 600)
+        document.querySelector(`#card-${index}`).classList.add("matched");
+        cardsData[index].isOpen = false;
+        cardsData[index].isMatched = true;
       });
       checkWinningCondition();
     }, 1000);
@@ -269,27 +215,16 @@ function checkWinningCondition() {
   }
 }
 
-//close cards if they are not matching
 function closeUnmatchedCards(openCardIndex) {
   if (
     openCardIndex.length === 2 &&
     cardsData[openCardIndex[0]].id !== cardsData[openCardIndex[1]].id
   ) {
-    timeoutID = setTimeout(function () {
+    setTimeout(function () {
       openCardIndex.forEach((index) => {
-        const card = document.querySelector(`#card-${index}`);
-
-        //add red flash
-        card.classList.add("unmatched");
-
-        //animation
-        setTimeout(() => {
-          card.classList.remove("unmatched");
-          card.classList.toggle("flipped");
-          cardsData[index].isOpen = false;
-        }, 500)
+        document.querySelector(`#card-${index}`).classList.toggle("flipped");
+        cardsData[index].isOpen = false;
       });
-      clearTimeout(timeoutID);
     }, 1500);
   }
 }
