@@ -10,15 +10,26 @@ const cards = document.querySelectorAll(".card");
 let cardsData = [];
 let counter = 0;
 let timer = 0;
-let intervalID, timeoutID;
+let intervalID = null;
+let timeoutID = null;
+
+init();
+
+startButton.addEventListener("click", () => {
+  mainMenu.classList.toggle("hidden");
+  gameArea.classList.toggle("hidden");
+});
+
+restartButton.addEventListener("click", () => {
+  cleanUp();
+  cardContainer.innerHTML = "";
+  init();
+});
 
 function init() {
-  clearInterval(intervalID);
-  clearTimeout(timeoutID);
-  //reset move counter
+  cleanUp();
   counter = 0;
   counterEl.textContent = counter;
-  //reset timer
   timer = 0;
   timerEl.textContent = timer;
   //fetch card data and render then
@@ -28,7 +39,13 @@ function init() {
   });
 }
 
-init();
+function cleanUp() {
+  clearInterval(intervalID);
+  clearTimeout(timeoutID);
+  intervalID = null;
+  timeoutID = null;
+  cardContainer.removeEventListener("click", handleCardClick);
+}
 
 // ==========================
 // FETCH CARD DATA
@@ -41,8 +58,10 @@ async function fetchCardsData() {
 
     const shuffledCards = shuffle(double(results));
     return shuffledCards;
-
   } catch (e) {
+    // TO-DO: stop implementing further and give player alert
+    // Try to re-fetch the data
+    // After X times, can return an error
     console.log(e);
   }
 }
@@ -55,13 +74,12 @@ function renderCards() {
   cardContainer.innerHTML = "";
 
   cardsData.forEach((card, index) => {
-
     // main div
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
     cardElement.id = `card-${index}`;
 
-    // front side 
+    // front side
     const cardFrontSideElement = document.createElement("div");
     cardFrontSideElement.classList.add("front-side");
     //frontside img
@@ -80,7 +98,6 @@ function renderCards() {
     // add images to the card
     cardFrontSideElement.appendChild(cardFrontSideImgElement);
     cardBackSideElement.appendChild(cardBackSideImgElement);
-
 
     //append sides to card
     cardElement.appendChild(cardFrontSideElement);
@@ -114,6 +131,8 @@ function renderCards() {
     //add card to cardcontainer
     cardContainer.appendChild(cardElement);
   });
+
+  cardContainer?.addEventListener("click", handleCardClick);
 }
 
 // ==========================
@@ -131,6 +150,29 @@ restartButton.addEventListener("click", () => {
   cardContainer.innerHTML = "";
   init();
 });
+function handleCardClick(event) {
+  const card = event.target.closest(".card");
+  if (!card) return;
+
+  const openCardIndexBeforeFlipping = getOpenCardsIndex();
+  if (openCardIndexBeforeFlipping.length === 2) {
+    return;
+  }
+
+  startTimer();
+
+  if (!card.classList.contains("flipped")) {
+    increaseCounter();
+  }
+
+  card.classList.toggle("flipped");
+  const cardIndex = card.id.split("-")[1];
+  cardsData[cardIndex].isOpen = !cardsData[cardIndex].isOpen;
+  const openCardIndexAfterFlipping = getOpenCardsIndex();
+  checkAndHideMatchedCards(openCardIndexAfterFlipping);
+  closeUnmatchedCards(openCardIndexAfterFlipping);
+  // checkIfTwoCardsMatch(openCardIndexAfterFlipping);
+}
 
 // ==========================
 // HELPER FUNCTIONS
@@ -138,11 +180,15 @@ restartButton.addEventListener("click", () => {
 
 //duplicate the array so we have pairs
 function double(arr) {
+  if (!arr) throw new Error("Invalid input!");
+
   const copiedArr = JSON.parse(JSON.stringify(arr));
   return [...arr, ...copiedArr];
 }
 //shuffle cards randomly
 function shuffle(arr) {
+  if (!arr) throw new Error("Invalid input!");
+
   const shuffledArr = [];
   const generatedIndex = {};
   let randomIndex;
@@ -168,12 +214,18 @@ function maybeIncreaseCounter(index) {
 function maybeStartTimer() {
   if (timer === 0) {
     intervalID = setInterval(function () {
-      timerEl.textContent = timer + 1;
       timer++;
+      timerEl.textContent = timer;
     }, 1000);
   }
 }
 //get indexes of all currently opened cards
+
+function increaseCounter() {
+  counter++;
+  counterEl.textContent = counter;
+}
+
 function getOpenCardsIndex() {
   const openCardIndex = [];
   cardsData.forEach((card, index) => {
@@ -183,29 +235,7 @@ function getOpenCardsIndex() {
   });
   return openCardIndex;
 }
-//close cards if they are not matching
-function closeUnmatchedCards(openCardIndex) {
-  if (
-    openCardIndex.length === 2 &&
-    cardsData[openCardIndex[0]].id !== cardsData[openCardIndex[1]].id
-  ) {
-    timeoutID = setTimeout(function () {
-      openCardIndex.forEach((index) => {
-        const card = document.querySelector(`#card-${index}`);
-        //add red flash
-        card.classList.add("unmatched");
 
-        //animation
-        setTimeout(() => {
-          card.classList.remove("unmatched");
-          card.classList.toggle("flipped");
-          cardsData[index].isOpen = false;
-        }, 500)
-      });
-      clearTimeout(timeoutID);
-    }, 1500);
-  }
-}
 //hide cards uf they match
 function checkAndHideMatchedCards(openCardIndex) {
   if (
@@ -225,6 +255,41 @@ function checkAndHideMatchedCards(openCardIndex) {
           card.classList.remove("matched");
         }, 600)
       });
+      checkWinningCondition();
     }, 1000);
+  }
+}
+
+function checkWinningCondition() {
+  const matchedCards = cardsData.filter((card) => card.isMatched);
+  if (matchedCards.length === cardsData.length) {
+    clearInterval(intervalID);
+    intervalID = null;
+    console.log("You win!");
+  }
+}
+
+//close cards if they are not matching
+function closeUnmatchedCards(openCardIndex) {
+  if (
+    openCardIndex.length === 2 &&
+    cardsData[openCardIndex[0]].id !== cardsData[openCardIndex[1]].id
+  ) {
+    timeoutID = setTimeout(function () {
+      openCardIndex.forEach((index) => {
+        const card = document.querySelector(`#card-${index}`);
+
+        //add red flash
+        card.classList.add("unmatched");
+
+        //animation
+        setTimeout(() => {
+          card.classList.remove("unmatched");
+          card.classList.toggle("flipped");
+          cardsData[index].isOpen = false;
+        }, 500)
+      });
+      clearTimeout(timeoutID);
+    }, 1500);
   }
 }
