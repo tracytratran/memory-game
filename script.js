@@ -28,8 +28,10 @@ restartButton.addEventListener("click", () => {
 
 function init() {
   cleanUp();
+
   counter = 0;
   counterEl.textContent = counter;
+
   timer = 0;
   timerEl.textContent = timer;
 
@@ -47,7 +49,6 @@ function cleanUp() {
   cardContainer.removeEventListener("click", handleCardClick);
 }
 
-//fetch the cards
 async function fetchCardsData() {
   try {
     let data = await fetch("./cards.json");
@@ -63,7 +64,6 @@ async function fetchCardsData() {
   }
 }
 
-//render the cards
 function renderCards() {
   cardContainer.innerHTML = "";
 
@@ -78,7 +78,7 @@ function renderCards() {
     cardFrontSideElement.classList.add("front-side");
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "./frontside.jpg";
+    cardFrontSideImgElement.src = "assets/images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
@@ -89,7 +89,7 @@ function renderCards() {
     cardBackSideImgElement.src = card.backside;
     cardBackSideImgElement.alt = `Card backside ${index}`;
 
-    // append images to the sides
+    // add images to the card
     cardFrontSideElement.appendChild(cardFrontSideImgElement);
     cardBackSideElement.appendChild(cardBackSideImgElement);
 
@@ -183,7 +183,8 @@ function checkAndHideMatchedCards(openCardIndex) {
     openCardIndex.length === 2 &&
     cardsData[openCardIndex[0]].id === cardsData[openCardIndex[1]].id
   ) {
-    // For player to have time viewing matched cards
+
+    
     setTimeout(() => {
       openCardIndex.forEach((index) => {
         document.querySelector(`#card-${index}`).classList.add("matched");
