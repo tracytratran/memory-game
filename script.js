@@ -28,11 +28,13 @@ restartButton.addEventListener("click", () => {
 
 function init() {
   cleanUp();
+
   counter = 0;
   counterEl.textContent = counter;
+
   timer = 0;
   timerEl.textContent = timer;
-  //fetch card data and render then
+
   fetchCardsData().then((data) => {
     cardsData = data;
     renderCards();
@@ -46,10 +48,6 @@ function cleanUp() {
   timeoutID = null;
   cardContainer.removeEventListener("click", handleCardClick);
 }
-
-// ==========================
-// FETCH CARD DATA
-// ==========================
 
 async function fetchCardsData() {
   try {
@@ -66,10 +64,6 @@ async function fetchCardsData() {
   }
 }
 
-// ==========================
-// RENDER CARDS TO DOM
-// ==========================
-
 function renderCards() {
   cardContainer.innerHTML = "";
 
@@ -84,7 +78,7 @@ function renderCards() {
     cardFrontSideElement.classList.add("front-side");
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "./frontside.jpg";
+    cardFrontSideImgElement.src = "assets/images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
@@ -133,18 +127,13 @@ function handleCardClick(event) {
   // checkIfTwoCardsMatch(openCardIndexAfterFlipping);
 }
 
-// ==========================
-// HELPER FUNCTIONS
-// ==========================
-
-//duplicate the array so we have pairs
 function double(arr) {
   if (!arr) throw new Error("Invalid input!");
 
   const copiedArr = JSON.parse(JSON.stringify(arr));
   return [...arr, ...copiedArr];
 }
-//shuffle cards randomly
+
 function shuffle(arr) {
   if (!arr) throw new Error("Invalid input!");
 
@@ -188,13 +177,14 @@ function getOpenCardsIndex() {
   });
   return openCardIndex;
 }
+
 function checkAndHideMatchedCards(openCardIndex) {
   if (
     openCardIndex.length === 2 &&
     cardsData[openCardIndex[0]].id === cardsData[openCardIndex[1]].id
   ) {
 
-    // For player to have time viewing matched cards
+    
     setTimeout(() => {
       openCardIndex.forEach((index) => {
         document.querySelector(`#card-${index}`).classList.add("matched");
