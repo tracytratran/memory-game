@@ -6,6 +6,7 @@ const restartButton = document.querySelector(".restart-button");
 const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
+
 let cardsData = [];
 let counter = 0;
 let timer = 0;
@@ -26,13 +27,12 @@ restartButton.addEventListener("click", () => {
 });
 
 function init() {
-  // clearInterval(intervalID);
-  // clearTimeout(timeoutID);
   cleanUp();
   counter = 0;
   counterEl.textContent = counter;
   timer = 0;
   timerEl.textContent = timer;
+
   fetchCardsData().then((data) => {
     cardsData = data;
     renderCards();
@@ -47,10 +47,12 @@ function cleanUp() {
   cardContainer.removeEventListener("click", handleCardClick);
 }
 
+//fetch the cards
 async function fetchCardsData() {
   try {
     let data = await fetch("./cards.json");
     let results = await data.json();
+
     const shuffledCards = shuffle(double(results));
     return shuffledCards;
   } catch (e) {
@@ -61,18 +63,39 @@ async function fetchCardsData() {
   }
 }
 
+//render the cards
 function renderCards() {
   cardContainer.innerHTML = "";
 
   cardsData.forEach((card, index) => {
+    // main div
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
     cardElement.id = `card-${index}`;
 
-    cardElement.innerHTML = `
-                <div class="front-side"><img src="./frontside.jpg" alt="Frontside image" /></div>
-                <div class="back-side"><img src=${card.backside} alt=${`Backside image ${card.id}`} /></div>
-            `;
+    // front side
+    const cardFrontSideElement = document.createElement("div");
+    cardFrontSideElement.classList.add("front-side");
+    //frontside img
+    const cardFrontSideImgElement = document.createElement("img");
+    cardFrontSideImgElement.src = "./frontside.jpg";
+    cardFrontSideImgElement.alt = "Card front side";
+
+    // back side
+    const cardBackSideElement = document.createElement("div");
+    cardBackSideElement.classList.add("back-side");
+    //backside img
+    const cardBackSideImgElement = document.createElement("img");
+    cardBackSideImgElement.src = card.backside;
+    cardBackSideImgElement.alt = `Card backside ${index}`;
+
+    // append images to the sides
+    cardFrontSideElement.appendChild(cardFrontSideImgElement);
+    cardBackSideElement.appendChild(cardBackSideImgElement);
+
+    //append sides to card
+    cardElement.appendChild(cardFrontSideElement);
+    cardElement.appendChild(cardBackSideElement);
 
     cardContainer.appendChild(cardElement);
   });

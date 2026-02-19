@@ -20,7 +20,7 @@ body::before {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
-  z-index: 0;
+
 }
 
 .container {
@@ -90,14 +90,7 @@ body::before {
   border-radius: 10px;
 }
 
-/* .front-side {
-  background-color: rgb(78, 66, 168);
-  color: white;
-} */
-
 .back-side {
-  /* background-color: rgb(189, 88, 212);
-  color: white; */
   transform: rotateY(180deg);
 }
 
@@ -117,13 +110,12 @@ body::before {
 
 .card.flipped .front-side {
   transform: rotateY(180deg);
-  transition-delay: 0s;
 }
 
 .card.flipped .back-side {
   transform: rotateY(0deg);
-  transition-delay: 0s;
 }
+
 .game-info {
   display: flex;
   justify-content: center;
@@ -131,6 +123,7 @@ body::before {
   margin-bottom: 20px;
   font-size: 1.2rem;
 }
+
 .game-info p {
   background: rgba(255, 255, 255, 0.1);
   padding: 10px 25px;
