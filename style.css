@@ -20,7 +20,6 @@ body::before {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
-
 }
 
 .container {
@@ -139,6 +138,8 @@ body::before {
   font-size: 1.3rem;
 }
 
-.visibility-hidden {
-  visibility: hidden;
+.matched {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
 }

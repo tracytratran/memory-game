@@ -122,8 +122,9 @@ function handleCardClick(event) {
   const cardIndex = card.id.split("-")[1];
   cardsData[cardIndex].isOpen = !cardsData[cardIndex].isOpen;
   const openCardIndexAfterFlipping = getOpenCardsIndex();
-  closeUnmatchedCards(openCardIndexAfterFlipping);
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
+  closeUnmatchedCards(openCardIndexAfterFlipping);
+  // checkIfTwoCardsMatch(openCardIndexAfterFlipping);
 }
 
 function double(arr) {
@@ -177,22 +178,6 @@ function getOpenCardsIndex() {
   return openCardIndex;
 }
 
-function closeUnmatchedCards(openCardIndex) {
-  if (
-    openCardIndex.length === 2 &&
-    cardsData[openCardIndex[0]].id !== cardsData[openCardIndex[1]].id
-  ) {
-    timeoutID = setTimeout(function () {
-      openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.toggle("flipped");
-        cardsData[index].isOpen = false;
-      });
-      clearTimeout(timeoutID);
-      timeoutID = null;
-    }, 1500);
-  }
-}
-
 function checkAndHideMatchedCards(openCardIndex) {
   if (
     openCardIndex.length === 2 &&
@@ -201,18 +186,34 @@ function checkAndHideMatchedCards(openCardIndex) {
     // For player to have time viewing matched cards
     setTimeout(() => {
       openCardIndex.forEach((index) => {
-        document
-          .querySelector(`#card-${index}`)
-          .classList.add("visibility-hidden");
+        document.querySelector(`#card-${index}`).classList.add("matched");
         cardsData[index].isOpen = false;
         cardsData[index].isMatched = true;
       });
-      const matchedCards = cardsData.filter((card) => card.isMatched);
-      if (matchedCards.length === cardsData.length) {
-        clearInterval(intervalID);
-        intervalID = null;
-        console.log("You win!");
-      }
+      checkWinningCondition();
     }, 1000);
+  }
+}
+
+function checkWinningCondition() {
+  const matchedCards = cardsData.filter((card) => card.isMatched);
+  if (matchedCards.length === cardsData.length) {
+    clearInterval(intervalID);
+    intervalID = null;
+    console.log("You win!");
+  }
+}
+
+function closeUnmatchedCards(openCardIndex) {
+  if (
+    openCardIndex.length === 2 &&
+    cardsData[openCardIndex[0]].id !== cardsData[openCardIndex[1]].id
+  ) {
+    setTimeout(function () {
+      openCardIndex.forEach((index) => {
+        document.querySelector(`#card-${index}`).classList.toggle("flipped");
+        cardsData[index].isOpen = false;
+      });
+    }, 1500);
   }
 }
