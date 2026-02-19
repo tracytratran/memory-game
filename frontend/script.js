@@ -8,8 +8,8 @@ const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 
 let cardsData = [];
-let counter = 0;
-let timer = 0;
+let counter;
+let timer;
 let intervalID = null;
 let timeoutID = null;
 
@@ -30,7 +30,7 @@ function init() {
   cleanUp();
   counter = 0;
   counterEl.textContent = counter;
-  timer = 0;
+  timer = 60;
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
@@ -40,10 +40,9 @@ function init() {
 }
 
 function cleanUp() {
-  clearInterval(intervalID);
   clearTimeout(timeoutID);
-  intervalID = null;
   timeoutID = null;
+  stopTimer();
   cardContainer.removeEventListener("click", handleCardClick);
 }
 
@@ -152,20 +151,29 @@ function shuffle(arr) {
   return shuffledArr;
 }
 
+function increaseCounter() {
+  counter++;
+  counterEl.textContent = counter;
+}
+
 function startTimer() {
   if (intervalID !== null) return;
 
   if (intervalID === null) {
     intervalID = setInterval(function () {
-      timer++;
+      timer--;
       timerEl.textContent = timer;
+      if (timer === 0) {
+        stopTimer();
+        cardContainer?.classList.add("time-up");
+      }
     }, 1000);
   }
 }
 
-function increaseCounter() {
-  counter++;
-  counterEl.textContent = counter;
+function stopTimer() {
+  clearInterval(intervalID);
+  intervalID = null;
 }
 
 function getOpenCardsIndex() {
@@ -198,8 +206,7 @@ function checkAndHideMatchedCards(openCardIndex) {
 function checkWinningCondition() {
   const matchedCards = cardsData.filter((card) => card.isMatched);
   if (matchedCards.length === cardsData.length) {
-    clearInterval(intervalID);
-    intervalID = null;
+    stopTimer();
     console.log("You win!");
   }
 }
