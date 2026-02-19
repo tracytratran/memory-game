@@ -78,7 +78,7 @@ function renderCards() {
     cardFrontSideElement.classList.add("front-side");
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "./frontside.jpg";
+    cardFrontSideImgElement.src = "./images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
