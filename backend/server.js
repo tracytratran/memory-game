@@ -25,10 +25,9 @@ db.run(`
                 "https://picsum.photos/id/237/200",
                 "https://picsum.photos/id/250/200"
             ];
-
-            for (let i = 0; i < cards.length; i++) {
-                db.run(`INSERT INTO cards (name) VALUES ('${cards[i]}')`);
-            }
+            
+            let values = cards.map(card => `('${card}')`).join(", ");
+            db.run(`INSERT INTO cards (name) VALUES ${values}`);
 
             console.log("Default cards inserted!");
         }
