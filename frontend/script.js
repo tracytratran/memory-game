@@ -44,6 +44,7 @@ function cleanUp() {
   timeoutID = null;
   stopTimer();
   cardContainer.removeEventListener("click", handleCardClick);
+  cardContainer.classList.remove("time-up");
 }
 
 //fetch the cards
@@ -99,7 +100,7 @@ function renderCards() {
     cardContainer.appendChild(cardElement);
   });
 
-  cardContainer?.addEventListener("click", handleCardClick);
+  cardContainer.addEventListener("click", handleCardClick);
 }
 
 function handleCardClick(event) {
@@ -123,7 +124,6 @@ function handleCardClick(event) {
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
-  // checkIfTwoCardsMatch(openCardIndexAfterFlipping);
 }
 
 function double(arr) {
@@ -163,10 +163,7 @@ function startTimer() {
     intervalID = setInterval(function () {
       timer--;
       timerEl.textContent = timer;
-      if (timer === 0) {
-        stopTimer();
-        cardContainer?.classList.add("time-up");
-      }
+      checkLosingCondition();
     }, 1000);
   }
 }
@@ -174,6 +171,13 @@ function startTimer() {
 function stopTimer() {
   clearInterval(intervalID);
   intervalID = null;
+}
+
+function checkLosingCondition() {
+  if (timer === 0) {
+    stopTimer();
+    cardContainer?.classList.add("time-up");
+  }
 }
 
 function getOpenCardsIndex() {
