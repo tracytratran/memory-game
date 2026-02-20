@@ -50,10 +50,10 @@ function cleanUp() {
 //fetch the cards
 async function fetchCardsData() {
   try {
-    let data = await fetch("./cards.json");
-    let results = await data.json();
+    const response = await fetch("http://localhost:8000/api/cards");
+    const data = await response.json();
 
-    const shuffledCards = shuffle(double(results));
+    const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
     // TO-DO: stop implementing further and give player alert
@@ -86,7 +86,7 @@ function renderCards() {
     cardBackSideElement.classList.add("back-side");
     //backside img
     const cardBackSideImgElement = document.createElement("img");
-    cardBackSideImgElement.src = card.backside;
+    cardBackSideImgElement.src = card.name;
     cardBackSideImgElement.alt = `Card backside ${index}`;
 
     // append images to the sides
