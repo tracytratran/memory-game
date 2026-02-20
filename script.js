@@ -6,6 +6,7 @@ const restartButton = document.querySelector(".restart-button");
 const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
+const winScreen = document.querySelector(".win-screen");
 
 let cardsData = [];
 let counter = 0;
@@ -21,6 +22,8 @@ startButton.addEventListener("click", () => {
 });
 
 restartButton.addEventListener("click", () => {
+  winScreen.classList.add("hidden");
+
   cleanUp();
   cardContainer.innerHTML = "";
   init();
@@ -183,8 +186,6 @@ function checkAndHideMatchedCards(openCardIndex) {
     openCardIndex.length === 2 &&
     cardsData[openCardIndex[0]].id === cardsData[openCardIndex[1]].id
   ) {
-
-    
     setTimeout(() => {
       openCardIndex.forEach((index) => {
         document.querySelector(`#card-${index}`).classList.add("matched");
@@ -198,10 +199,18 @@ function checkAndHideMatchedCards(openCardIndex) {
 
 function checkWinningCondition() {
   const matchedCards = cardsData.filter((card) => card.isMatched);
+
   if (matchedCards.length === cardsData.length) {
     clearInterval(intervalID);
     intervalID = null;
-    console.log("You win!");
+
+    winScreen.innerHTML = `
+      <h1>🎉 You Win! 🎉</h1>
+      <p class="win-stats">You finished in ${counter} moves</p>
+      <p class="win-stats">Time taken: ${timer} seconds</p>
+    `;
+
+    winScreen.classList.remove("hidden");
   }
 }
 
@@ -215,6 +224,6 @@ function closeUnmatchedCards(openCardIndex) {
         document.querySelector(`#card-${index}`).classList.toggle("flipped");
         cardsData[index].isOpen = false;
       });
-    }, 1500);
+    }, 1000);
   }
 }
