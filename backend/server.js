@@ -96,7 +96,10 @@ db.run(
           },
         ];
 
-        let values = cards.map((card) => `('${card.link}', '${card.category}')`).join(", ");
+        let values = cards
+          .map((card) => `('${card.link}', '${card.category}')`)
+          .join(", ");
+
         db.run(`INSERT INTO cards (name, category) VALUES ${values}`);
 
         console.log("Default cards inserted!");
