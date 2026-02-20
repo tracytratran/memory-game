@@ -8,8 +8,8 @@ const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 
 let cardsData = [];
-let counter = 0;
-let timer = 0;
+let counter;
+let timer;
 let intervalID = null;
 let timeoutID = null;
 
@@ -31,8 +31,7 @@ function init() {
 
   counter = 0;
   counterEl.textContent = counter;
-
-  timer = 0;
+  timer = 60;
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
@@ -42,19 +41,19 @@ function init() {
 }
 
 function cleanUp() {
-  clearInterval(intervalID);
   clearTimeout(timeoutID);
-  intervalID = null;
   timeoutID = null;
+  stopTimer();
   cardContainer.removeEventListener("click", handleCardClick);
+  cardContainer.classList.remove("time-up");
 }
 
 async function fetchCardsData() {
   try {
-    let data = await fetch("./cards.json");
-    let results = await data.json();
+    const response = await fetch("http://localhost:8000/api/cards");
+    const data = await response.json();
 
-    const shuffledCards = shuffle(double(results));
+    const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
     // TO-DO: stop implementing further and give player alert
@@ -86,7 +85,7 @@ function renderCards() {
     cardBackSideElement.classList.add("back-side");
     //backside img
     const cardBackSideImgElement = document.createElement("img");
-    cardBackSideImgElement.src = card.backside;
+    cardBackSideImgElement.src = card.name;
     cardBackSideImgElement.alt = `Card backside ${index}`;
 
     // add images to the card
@@ -100,7 +99,7 @@ function renderCards() {
     cardContainer.appendChild(cardElement);
   });
 
-  cardContainer?.addEventListener("click", handleCardClick);
+  cardContainer.addEventListener("click", handleCardClick);
 }
 
 function handleCardClick(event) {
@@ -124,7 +123,6 @@ function handleCardClick(event) {
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
-  // checkIfTwoCardsMatch(openCardIndexAfterFlipping);
 }
 
 function double(arr) {
@@ -152,20 +150,33 @@ function shuffle(arr) {
   return shuffledArr;
 }
 
+function increaseCounter() {
+  counter++;
+  counterEl.textContent = counter;
+}
+
 function startTimer() {
   if (intervalID !== null) return;
 
   if (intervalID === null) {
     intervalID = setInterval(function () {
-      timer++;
+      timer--;
       timerEl.textContent = timer;
+      checkLosingCondition();
     }, 1000);
   }
 }
 
-function increaseCounter() {
-  counter++;
-  counterEl.textContent = counter;
+function stopTimer() {
+  clearInterval(intervalID);
+  intervalID = null;
+}
+
+function checkLosingCondition() {
+  if (timer === 0) {
+    stopTimer();
+    cardContainer?.classList.add("time-up");
+  }
 }
 
 function getOpenCardsIndex() {
@@ -183,8 +194,6 @@ function checkAndHideMatchedCards(openCardIndex) {
     openCardIndex.length === 2 &&
     cardsData[openCardIndex[0]].id === cardsData[openCardIndex[1]].id
   ) {
-
-    
     setTimeout(() => {
       openCardIndex.forEach((index) => {
         document.querySelector(`#card-${index}`).classList.add("matched");
@@ -199,8 +208,7 @@ function checkAndHideMatchedCards(openCardIndex) {
 function checkWinningCondition() {
   const matchedCards = cardsData.filter((card) => card.isMatched);
   if (matchedCards.length === cardsData.length) {
-    clearInterval(intervalID);
-    intervalID = null;
+    stopTimer();
     console.log("You win!");
   }
 }

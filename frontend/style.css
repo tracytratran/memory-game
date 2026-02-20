@@ -7,7 +7,8 @@
 body {
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: url("./assets/images/background.jpg") no-repeat center center fixed;
+  background: url("./assets/images/background.jpg") no-repeat center center
+    fixed;
   background-size: cover;
   color: white;
   position: relative;
@@ -139,18 +140,14 @@ body {
   font-size: 1.3rem;
 }
 
-.visibility-hidden {
-  visibility: hidden;
-}
-
-.matched {
+.matched,
+.time-up {
   opacity: 0;
   pointer-events: none;
   transition: opacity 300ms ease;
 }
 
 @keyframes flash {
-
   0%,
   100% {
     transform: scale(1.1);
@@ -169,7 +166,6 @@ body {
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);
@@ -186,7 +182,6 @@ body {
   75% {
     transform: translateX(-10px);
   }
-
 }
 
 @media (max-width: 600px) {
@@ -225,7 +220,6 @@ body {
   .main-menu:not(.hidden) {
     display: flex;
   }
-
 }
 
 @media (max-width: 400px) {
