@@ -19,6 +19,10 @@ init();
 startButton.addEventListener("click", () => {
   mainMenu.classList.toggle("hidden");
   gameArea.classList.toggle("hidden");
+  
+  cleanUp();
+  cardContainer.innerHTML = "";
+  init();
 });
 
 restartButton.addEventListener("click", () => {
@@ -28,6 +32,11 @@ restartButton.addEventListener("click", () => {
   cardContainer.innerHTML = "";
   init();
 });
+
+function getSelectedLevel() {
+  const selected = document.querySelector('.level:checked');
+  return selected ? selected.value : "level-1";
+}
 
 function init() {
   cleanUp();
@@ -53,7 +62,9 @@ function cleanUp() {
 
 async function fetchCardsData() {
   try {
-    const response = await fetch("http://localhost:8000/api/cards");
+    const level = getSelectedLevel();
+    const response = await fetch(`http://localhost:8000/api/cards?category=${level}`);
+
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
@@ -87,7 +98,7 @@ function renderCards() {
     // back side
     const cardBackSideElement = document.createElement("div");
     cardBackSideElement.classList.add("back-side");
-    
+
     //backside img
     const cardBackSideImgElement = document.createElement("img");
     cardBackSideImgElement.src = card.name;
@@ -224,7 +235,7 @@ function checkWinningCondition() {
     `;
 
     winScreen.classList.remove("hidden");
-    
+
     stopTimer();
   }
 }
