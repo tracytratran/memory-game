@@ -114,7 +114,14 @@ app.get("/", (req, res) => {
 
 //endpoint to get all cards from SQLite
 app.get("/api/cards", (req, res) => {
-  db.all("SELECT * FROM cards", (err, rows) => {
+  let sql = "SELECT * FROM cards";
+
+  const category = req.query.category;
+  if (category) {
+    sql += ` WHERE category = '${category}' `;
+  }
+
+  db.all(sql, (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "Database error" });
