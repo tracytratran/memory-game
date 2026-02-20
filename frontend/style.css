@@ -5,27 +5,32 @@
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: url("./images/background.jpg") no-repeat center center/cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: url("./assets/images/background.jpg") no-repeat center center
+    fixed;
+  background-size: cover;
   color: white;
   position: relative;
-}
-
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   text-align: center;
   position: relative;
   z-index: 1;
+  width: 95vw;
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.main-menu:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .container h1 {
@@ -60,8 +65,8 @@ body::before {
 }
 
 .card {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   perspective: 1000px;
   cursor: pointer;
   position: relative;
@@ -75,11 +80,8 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
   backface-visibility: hidden;
-  transition:
-    transform 0.6s,
-    background-color 0.6s;
+  transition: transform 0.6s;
 }
 
 .front-side img,
@@ -143,4 +145,85 @@ body::before {
   opacity: 0;
   pointer-events: none;
   transition: opacity 300ms ease;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px #00ff00;
+  }
+
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 50px #00ff00;
+  }
+}
+
+.unmatched {
+  animation: shake 0.5s ease-in-out 1;
+  box-shadow: 0 0 50px #d60101;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+
+  75% {
+    transform: translateX(-10px);
+  }
+}
+
+@media (max-width: 600px) {
+  .container h1 {
+    font-size: 2rem;
+  }
+
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .game-info {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1rem;
+  }
+
+  .start-button,
+  .button {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+
+  .restart-button {
+    margin: 20px 0;
+  }
+
+  .main-menu {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .main-menu:not(.hidden) {
+    display: flex;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
 }
