@@ -19,7 +19,7 @@ init();
 startButton.addEventListener("click", () => {
   mainMenu.classList.toggle("hidden");
   gameArea.classList.toggle("hidden");
-  
+
   cleanUp();
   cardContainer.innerHTML = "";
   init();
@@ -70,9 +70,6 @@ async function fetchCardsData() {
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
-    // TO-DO: stop implementing further and give player alert
-    // Try to re-fetch the data
-    // After X times, can return an error
     console.log(e);
   }
 }
