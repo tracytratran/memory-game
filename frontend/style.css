@@ -87,7 +87,10 @@ body {
 .back-side img {
   box-sizing: content-box;
   width: 100%;
+  background-position: center;
+  background-size: contain;
   border-radius: 10px;
+  height: 100%;
 }
 
 .back-side {
