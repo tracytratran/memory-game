@@ -7,6 +7,7 @@ const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
+const timeLimit = 60;
 
 let cardsData = [];
 let counter;
@@ -34,7 +35,7 @@ function init() {
 
   counter = 0;
   counterEl.textContent = counter;
-  timer = 60;
+  timer = timeLimit;
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
@@ -87,7 +88,7 @@ function renderCards() {
     // back side
     const cardBackSideElement = document.createElement("div");
     cardBackSideElement.classList.add("back-side");
-    
+
     //backside img
     const cardBackSideImgElement = document.createElement("img");
     cardBackSideImgElement.src = card.name;
@@ -220,11 +221,11 @@ function checkWinningCondition() {
     winScreen.innerHTML = `
       <h1>🎉 You Win! 🎉</h1>
       <p class="win-stats">You finished in ${counter} moves</p>
-      <p class="win-stats">Time taken: ${timer} seconds</p>
+      <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
     `;
 
     winScreen.classList.remove("hidden");
-    
+
     stopTimer();
   }
 }
