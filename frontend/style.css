@@ -7,7 +7,7 @@
 body {
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: url("./assets/images/background.jpg") no-repeat center center fixed;
+  background: url("../assets/images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
   position: relative;
@@ -139,11 +139,8 @@ body {
   font-size: 1.3rem;
 }
 
-.visibility-hidden {
-  visibility: hidden;
-}
-
-.matched {
+.matched,
+.time-up {
   opacity: 0;
   pointer-events: none;
   transition: opacity 300ms ease;
