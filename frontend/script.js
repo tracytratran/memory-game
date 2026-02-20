@@ -78,14 +78,16 @@ function renderCards() {
     // front side
     const cardFrontSideElement = document.createElement("div");
     cardFrontSideElement.classList.add("front-side");
+
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "assets/images/frontside.jpg";
+    cardFrontSideImgElement.src = "../assets/images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
     const cardBackSideElement = document.createElement("div");
     cardBackSideElement.classList.add("back-side");
+    
     //backside img
     const cardBackSideImgElement = document.createElement("img");
     cardBackSideImgElement.src = card.name;
