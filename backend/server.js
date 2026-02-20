@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3");
 const db = new sqlite3.Database("./database.db");
+const cors = require("cors");
 
 db.run(
   `
@@ -38,7 +39,9 @@ db.run(
 
 const app = express();
 
-const PORT = 5000;
+app.use(cors());
+
+const PORT = 8000;
 //defualt endpoint
 app.get("/", (req, res) => {
   res.send("Hello Express");
