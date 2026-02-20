@@ -6,6 +6,7 @@ const restartButton = document.querySelector(".restart-button");
 const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
+const winScreen = document.querySelector(".win-screen");
 
 let cardsData = [];
 let counter;
@@ -21,6 +22,8 @@ startButton.addEventListener("click", () => {
 });
 
 restartButton.addEventListener("click", () => {
+  winScreen.classList.add("hidden");
+
   cleanUp();
   cardContainer.innerHTML = "";
   init();
@@ -75,14 +78,16 @@ function renderCards() {
     // front side
     const cardFrontSideElement = document.createElement("div");
     cardFrontSideElement.classList.add("front-side");
+
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "assets/images/frontside.jpg";
+    cardFrontSideImgElement.src = "../assets/images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
     const cardBackSideElement = document.createElement("div");
     cardBackSideElement.classList.add("back-side");
+    
     //backside img
     const cardBackSideImgElement = document.createElement("img");
     cardBackSideImgElement.src = card.name;
@@ -207,9 +212,20 @@ function checkAndHideMatchedCards(openCardIndex) {
 
 function checkWinningCondition() {
   const matchedCards = cardsData.filter((card) => card.isMatched);
+
   if (matchedCards.length === cardsData.length) {
+    clearInterval(intervalID);
+    intervalID = null;
+
+    winScreen.innerHTML = `
+      <h1>🎉 You Win! 🎉</h1>
+      <p class="win-stats">You finished in ${counter} moves</p>
+      <p class="win-stats">Time taken: ${timer} seconds</p>
+    `;
+
+    winScreen.classList.remove("hidden");
+    
     stopTimer();
-    console.log("You win!");
   }
 }
 
@@ -223,6 +239,6 @@ function closeUnmatchedCards(openCardIndex) {
         document.querySelector(`#card-${index}`).classList.toggle("flipped");
         cardsData[index].isOpen = false;
       });
-    }, 1500);
+    }, 1000);
   }
 }
