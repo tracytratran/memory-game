@@ -62,10 +62,7 @@ db.run(
             category: "level-2",
             link: "https://hamlettours.com/wp-content/uploads/Nyhavn-ikke-til-print-1024x681.jpg",
           },
-          {
-            category: "level-2",
-            link: "https://images.unsplash.com/photo-1549144511-f099e773c147",
-          },
+
           {
             category: "level-2",
             link: "https://plus.unsplash.com/premium_photo-1730145749791-28fc538d7203",
@@ -90,6 +87,11 @@ db.run(
             category: "level-2",
             link: "https://images.unsplash.com/photo-1627932384339-3c0fdf74679e",
           },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1526997237335-45a11b46ecb3",
+          },
+
           {
             category: "level-2",
             link: "https://images.unsplash.com/photo-1526997237335-45a11b46ecb3",
