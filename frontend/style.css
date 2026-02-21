@@ -224,7 +224,6 @@ body {
   text-shadow: 0 0 0.5rem #901661;
 }
 
-
 .hidden {
   display: none;
 }
@@ -269,6 +268,19 @@ body {
     min-width: 30rem;
     padding: 1em;
     height: 30%;
+  }
+
+  .card-container.grid-small {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .restart-button,
+  .main-menu-button {
+    padding: 0.9em 1em;
+    font-size: 0.85rem;
+    width: auto;
   }
 }
 
