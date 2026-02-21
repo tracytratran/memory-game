@@ -7,7 +7,7 @@ const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
-const timeLimit = 20;
+const timeLimit = 60;
 
 let cardsData = [];
 let counter;
