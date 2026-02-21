@@ -1,58 +1,54 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Memory Game</title>
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="main-menu">
-        <h1>Memory Game</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Memory Game</title>
+</head>
 
-        <div class="level-selection">
-          <label>
-            <input
-              class="level"
-              type="radio"
-              name="level"
-              value="level-1"
-              checked
-            />
-            Level 1
-          </label>
-          <label>
-            <input class="level" type="radio" name="level" value="level-2" />
-            Level 2
-          </label>
-        </div>
+<body>
+  <div class="container">
+    <div class="main-menu">
+      <h1>Memory Game</h1>
 
-        <button class="start-button button">Start Game</button>
+      <div class="level-selection">
+        <label>
+          <input class="level" type="radio" name="level" value="level-1" checked />
+          Level 1
+        </label>
+        <label>
+          <input class="level" type="radio" name="level" value="level-2" />
+          Level 2
+        </label>
       </div>
 
-      <div class="game-area hidden">
-        <h1>Game Start</h1>
-
-        <div class="game-info">
-          <p>Moves: <span id="move-counter">0</span></p>
-          <p>Time: <span id="timer">0</span>s</p>
-        </div>
-
-        <div class="win-screen hidden"></div>
-
-        <div class="card-container"></div>
-
-        <div class="button-seletion">
-          <button class="main-menu-button button" onclick="location.reload()">
-            Menu
-          </button>
-          <button class="restart-button button">Restart</button>
-        </div>
-      </div>
+      <button class="start-button button">Start Game</button>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+    <div class="game-area hidden">
+      <h1>Game Start</h1>
+
+      <div class="game-info">
+        <p>Moves: <span id="move-counter">0</span></p>
+        <p>Time: <span id="timer">0</span>s</p>
+      </div>
+
+      <div class="win-screen hidden"></div>
+
+      <div class="card-container"></div>
+
+      <div class="button-seletion">
+        <button class="main-menu-button button" onclick="location.reload()">
+          Menu
+        </button>
+        <button class="restart-button button">Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
