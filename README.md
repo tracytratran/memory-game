@@ -4,11 +4,11 @@ A web-based **Memory Game** using **HTML, CSS, JavaScript**, with a **Node.js + 
 
 ## Features
 
-* Two difficulty levels
-* Timer and move counter
-* Responsive design
-* Cards loaded from SQLite via API
-* Restart and win screen with stats
+- Two difficulty levels
+- Timer and move counter
+- Responsive design
+- Cards loaded from SQLite via API
+- Restart and win screen with stats
 
 ## Setup
 
@@ -35,11 +35,11 @@ Open `frontend/index.html` in a browser and start the game.
 
 ## Tech Stack
 
-* **Frontend:** HTML, CSS, JavaScript
-* **Backend:** Node.js, Express
-* **Database:** SQLite
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Node.js, Express
+- **Database:** SQLite
 
 ## Team
 
-* [Tracy](https://github.com/tracytratran)
-* [Juliya](https://github.com/Juli82b4)  
+- [Tracy](https://github.com/tracytratran)
+- [Juliya](https://github.com/Juli82b4)
