@@ -66,7 +66,9 @@ function cleanUp() {
 async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
-    const response = await fetch(`https://memoga.onrender.com/api/cards?category=${level}`);
+    const response = await fetch(
+      `https://memoga.onrender.com/api/cards?category=${level}`,
+    );
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
@@ -122,7 +124,7 @@ function renderCards() {
   if (level != "level-1") {
     cardContainer.classList.add("grid-wide");
   } else {
-    cardContainer.classList.add("grid-small")
+    cardContainer.classList.add("grid-small");
   }
 
   cardContainer.addEventListener("click", handleCardClick);

@@ -6,8 +6,9 @@
 
 body {
   min-height: 100vh;
-  font-family: 'Orbitron', sans-serif;
-  background: url("../assets/images/background.jpg") no-repeat center center fixed;
+  font-family: "Orbitron", sans-serif;
+  background: url("../assets/images/background.jpg") no-repeat center center
+    fixed;
   background-size: cover;
   color: white;
   position: relative;
@@ -87,8 +88,7 @@ body {
   font-weight: bold;
   padding: 1em 2em;
   margin: 1em;
-  font-family: 'Orbitron', sans-serif;
-  ;
+  font-family: "Orbitron", sans-serif;
 }
 
 .button-seletion {
@@ -100,7 +100,6 @@ body {
 .button-seletion button {
   max-width: 150px;
   width: 100%;
-
 }
 
 .button:hover,
@@ -202,7 +201,6 @@ body {
 }
 
 @keyframes flash {
-
   0%,
   100% {
     transform: scale(1.1);
@@ -221,7 +219,6 @@ body {
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);
