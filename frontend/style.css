@@ -168,6 +168,8 @@ body {
 
 .card-container.grid-wide {
   grid-template-columns: repeat(6, 1fr);
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .game-info {
