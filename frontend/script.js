@@ -7,7 +7,7 @@ const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
-
+// const timeLimit = 60;
 let cardsData = [];
 let counter;
 let timer;
@@ -43,7 +43,7 @@ function init() {
 
   counter = 0;
   counterEl.textContent = counter;
-  timer = 60;
+  timer = getTimeLimit();
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
@@ -193,6 +193,12 @@ function startTimer() {
 function stopTimer() {
   clearInterval(intervalID);
   intervalID = null;
+}
+
+function getTimeLimit() {
+  const level = getSelectedLevel();
+  const timeLimit = level === "level-1" ? 60 : 90;
+  return timeLimit;
 }
 
 function checkLosingCondition() {
