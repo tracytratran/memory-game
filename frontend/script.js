@@ -7,7 +7,7 @@ const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
-const timeLimit = 60;
+const timeLimit = 20;
 
 let cardsData = [];
 let counter;
@@ -54,7 +54,7 @@ function cleanUp() {
 
 async function fetchCardsData() {
   try {
-    const response = await fetch("http://localhost:8000/api/cards");
+    const response = await fetch("https://memoga.onrender.com/api/cards");
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
