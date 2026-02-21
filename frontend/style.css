@@ -7,7 +7,8 @@
 body {
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: url("../assets/images/background.jpg") no-repeat center center fixed;
+  background: url("../assets/images/background.jpg") no-repeat center center
+    fixed;
   background-size: cover;
   color: white;
   position: relative;
@@ -184,7 +185,6 @@ body {
 }
 
 @keyframes flash {
-
   0%,
   100% {
     transform: scale(1.1);
@@ -203,7 +203,6 @@ body {
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);
@@ -226,7 +225,8 @@ body {
   text-decoration: none;
 }
 
-.win-screen {
+.win-screen,
+.lose-screen {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -244,9 +244,9 @@ body {
   box-shadow: 0 0 20px #ad42fe;
 }
 
-.win-screen h1 {
+.win-screen h1,
+.lose-screen h1 {
   font-size: 2.5rem;
-  color: #fe3efe;
   margin-bottom: 10px;
   text-shadow: 0 0 8px #901661;
 }
@@ -276,6 +276,14 @@ body {
 }
 
 /*Responsive*/
+.win-screen h1 {
+  color: #fe3efe;
+}
+
+.lose-screen h1 {
+  color: #ffffff;
+}
+
 @media (max-width: 600px) {
   .container h1 {
     font-size: 2rem;
