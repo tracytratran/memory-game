@@ -7,8 +7,7 @@
 body {
   min-height: 100vh;
   font-family: "Orbitron", sans-serif;
-  background: url("../assets/images/background.jpg") no-repeat center center
-    fixed;
+  background: url("../assets/images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
   position: relative;
@@ -203,6 +202,7 @@ body {
 }
 
 @keyframes flash {
+
   0%,
   100% {
     transform: scale(1.1);
@@ -221,6 +221,7 @@ body {
 }
 
 @keyframes shake {
+
   0%,
   100% {
     transform: translateX(0);
@@ -354,11 +355,11 @@ body {
 }
 
 @media (max-width: 400px) {
-  <<<<<<< HEAD=======.card-container {
+  .card-container {
     grid-template-columns: 1fr;
   }
 
-  >>>>>>>main .win-screen {
+  main .win-screen {
     min-width: 90%;
     padding: 1.25rem;
   }
