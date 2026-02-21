@@ -286,14 +286,6 @@ body {
   font-size: 1.2rem;
 }
 
-.button-seletion {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
 /*Responsive*/
 .win-screen h1 {
   color: #fe3efe;
