@@ -21,6 +21,10 @@ init();
 startButton.addEventListener("click", () => {
   mainMenu.classList.toggle("hidden");
   gameArea.classList.toggle("hidden");
+
+  cleanUp();
+  cardContainer.innerHTML = "";
+  init();
 });
 
 restartButton.addEventListener("click", () => {
@@ -31,6 +35,11 @@ restartButton.addEventListener("click", () => {
   cardContainer.innerHTML = "";
   init();
 });
+
+function getSelectedLevel() {
+  const selected = document.querySelector('.level:checked');
+  return selected ? selected.value : "level-1";
+}
 
 function init() {
   cleanUp();
@@ -56,15 +65,14 @@ function cleanUp() {
 
 async function fetchCardsData() {
   try {
-    const response = await fetch("https://memoga.onrender.com/api/cards");
+    const level = getSelectedLevel();
+
+    const response = await fetch("https://memoga.onrender.com/api/cards?category=${level}");
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
-    // TO-DO: stop implementing further and give player alert
-    // Try to re-fetch the data
-    // After X times, can return an error
     console.log(e);
   }
 }

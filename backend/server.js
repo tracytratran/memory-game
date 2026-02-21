@@ -7,7 +7,8 @@ db.run(
   `
     CREATE TABLE IF NOT EXISTS cards (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        name TEXT NOT NULL,
+        category TEXT NOT NULL 
     )
 `,
   (err) => {
@@ -20,16 +21,86 @@ db.run(
 
       if (row.count === 0) {
         const cards = [
-          "https://picsum.photos/id/13/200",
-          "https://picsum.photos/id/155/200",
-          "https://picsum.photos/id/193/200",
-          "https://picsum.photos/id/211/200",
-          "https://picsum.photos/id/237/200",
-          "https://picsum.photos/id/250/200",
+          {
+            category: "level-1",
+            link: "https://picsum.photos/id/13/200",
+          },
+          {
+            category: "level-1",
+            link: "https://picsum.photos/id/155/200",
+          },
+          {
+            category: "level-1",
+            link: "https://picsum.photos/id/193/200",
+          },
+          {
+            category: "level-1",
+            link: "https://picsum.photos/id/211/200",
+          },
+          {
+            category: "level-1",
+            link: "https://picsum.photos/id/237/200",
+          },
+          {
+            category: "level-1",
+            link: "https://picsum.photos/id/250/200",
+          },
+          // level 2
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1510253687831-0f982d7862fc",
+          },
+          {
+            category: "level-2",
+            link: "https://sana.ae/wp-content/uploads/2018/10/00-holding-wroclaw-poland-travel-guide.jpg",
+          },
+          {
+            category: "level-2",
+            link: "https://onestep4ward.com/wp-content/uploads/2011/08/dreamstime_xxl_55742473-1536x1207.jpg",
+          },
+          {
+            category: "level-2",
+            link: "https://hamlettours.com/wp-content/uploads/Nyhavn-ikke-til-print-1024x681.jpg",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1549144511-f099e773c147-paris",
+          },
+          {
+            category: "level-2",
+            link: "https://plus.unsplash.com/premium_photo-1730145749791-28fc538d7203",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1548013146-72479768bada",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1549145177-238518f1ec1a",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1591139308596-9b663fa6d0a0",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1603852452378-a4e8d84324a2",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1627932384339-3c0fdf74679e",
+          },
+          {
+            category: "level-2",
+            link: "https://images.unsplash.com/photo-1526997237335-45a11b46ecb3",
+          },
         ];
 
-        let values = cards.map((card) => `('${card}')`).join(", ");
-        db.run(`INSERT INTO cards (name) VALUES ${values}`);
+        let values = cards
+          .map((card) => `('${card.link}', '${card.category}')`)
+          .join(", ");
+
+        db.run(`INSERT INTO cards (name, category) VALUES ${values}`);
 
         console.log("Default cards inserted!");
       }
@@ -49,7 +120,14 @@ app.get("/", (req, res) => {
 
 //endpoint to get all cards from SQLite
 app.get("/api/cards", (req, res) => {
-  db.all("SELECT * FROM cards", (err, rows) => {
+  let sql = "SELECT * FROM cards";
+
+  const category = req.query.category;
+  if (category) {
+    sql += ` WHERE category = '${category}' `;
+  }
+
+  db.all(sql, (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "Database error" });
