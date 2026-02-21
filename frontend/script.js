@@ -7,6 +7,7 @@ const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
+const loseScreen = document.querySelector(".lose-screen");
 const timeLimit = 60;
 
 let cardsData = [];
@@ -24,6 +25,7 @@ startButton.addEventListener("click", () => {
 
 restartButton.addEventListener("click", () => {
   winScreen.classList.add("hidden");
+  loseScreen.classList.add("hidden");
 
   cleanUp();
   cardContainer.innerHTML = "";
@@ -181,7 +183,14 @@ function stopTimer() {
 function checkLosingCondition() {
   if (timer === 0) {
     stopTimer();
-    cardContainer?.classList.add("time-up");
+    cardContainer.classList.add("time-up");
+
+    loseScreen.innerHTML = `
+      <h1>Time's up!</h1>
+      <h1>You lose!</h1>
+    `;
+
+    loseScreen.classList.remove("hidden");
   }
 }
 
