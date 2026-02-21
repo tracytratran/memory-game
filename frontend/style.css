@@ -202,6 +202,7 @@ body {
 }
 
 @keyframes flash {
+
   0%,
   100% {
     transform: scale(1.1);
@@ -220,6 +221,7 @@ body {
 }
 
 @keyframes shake {
+
   0%,
   100% {
     transform: translateX(0);
@@ -271,6 +273,31 @@ body {
   display: none;
 }
 
+.matched,
+.time-up {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.restart-button,
+.main-menu-button {
+  padding: 1em 1em;
+  margin: 1.5em;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+.button-seletion {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/*Responsive*/
 .win-screen h1 {
   color: #fe3efe;
 }
@@ -336,7 +363,11 @@ body {
 }
 
 @media (max-width: 400px) {
-  .win-screen {
+  <<<<<<< HEAD=======.card-container {
+    grid-template-columns: 1fr;
+  }
+
+  >>>>>>>main .win-screen {
     min-width: 90%;
     padding: 1.25rem;
   }
