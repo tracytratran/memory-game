@@ -201,7 +201,49 @@ body {
   transition: opacity 300ms ease;
 }
 
-.win-screen {
+@keyframes flash {
+  0%,
+  100% {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px #00ff00;
+  }
+
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 50px #00ff00;
+  }
+}
+
+.unmatched {
+  animation: shake 0.5s ease-in-out 1;
+  box-shadow: 0 0 50px #d60101;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+
+  75% {
+    transform: translateX(-10px);
+  }
+}
+
+.play-again-button {
+  text-decoration: none;
+}
+
+.win-screen,
+.lose-screen {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -218,7 +260,8 @@ body {
   box-shadow: 0 0 1.25rem #ad42fe;
 }
 
-.win-screen h1 {
+.win-screen h1,
+.lose-screen h1 {
   font-size: 2.5rem;
   color: #fe3efe;
   text-shadow: 0 0 0.5rem #901661;
@@ -226,6 +269,14 @@ body {
 
 .hidden {
   display: none;
+}
+
+.win-screen h1 {
+  color: #fe3efe;
+}
+
+.lose-screen h1 {
+  color: #ffffff;
 }
 
 @media (max-width: 600px) {

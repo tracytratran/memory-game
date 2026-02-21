@@ -7,7 +7,9 @@ const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
-// const timeLimit = 60;
+const loseScreen = document.querySelector(".lose-screen");
+const timeLimit = 60;
+
 let cardsData = [];
 let counter;
 let timer;
@@ -27,6 +29,7 @@ startButton.addEventListener("click", () => {
 
 restartButton.addEventListener("click", () => {
   winScreen.classList.add("hidden");
+  loseScreen.classList.add("hidden");
 
   cleanUp();
   cardContainer.innerHTML = "";
@@ -63,9 +66,7 @@ function cleanUp() {
 async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
-    const response = await fetch(
-      `http://localhost:8000/api/cards?category=${level}`,
-    );
+    const response = await fetch(`https://memoga.onrender.com/api/cards?category=${level}`);
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
@@ -206,7 +207,14 @@ function getTimeLimit() {
 function checkLosingCondition() {
   if (timer === 0) {
     stopTimer();
-    cardContainer?.classList.add("time-up");
+    cardContainer.classList.add("time-up");
+
+    loseScreen.innerHTML = `
+      <h1>Time's up!</h1>
+      <h1>You lose!</h1>
+    `;
+
+    loseScreen.classList.remove("hidden");
   }
 }
 
@@ -246,7 +254,7 @@ function checkWinningCondition() {
     winScreen.innerHTML = `
       <h1>🎉 You Win! 🎉</h1>
       <p class="win-stats">You finished in ${counter} moves</p>
-      <p class="win-stats">Time taken: ${timer} seconds</p>
+      <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
     `;
 
     winScreen.classList.remove("hidden");
