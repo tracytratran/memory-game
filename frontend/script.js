@@ -37,7 +37,7 @@ restartButton.addEventListener("click", () => {
 });
 
 function getSelectedLevel() {
-  const selected = document.querySelector('.level:checked');
+  const selected = document.querySelector(".level:checked");
   return selected ? selected.value : "level-1";
 }
 
@@ -46,7 +46,7 @@ function init() {
 
   counter = 0;
   counterEl.textContent = counter;
-  timer = timeLimit;
+  timer = getTimeLimit();
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
@@ -66,8 +66,9 @@ function cleanUp() {
 async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
-
-    const response = await fetch("https://memoga.onrender.com/api/cards?category=${level}");
+    const response = await fetch(
+      `https://memoga.onrender.com/api/cards?category=${level}`,
+    );
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
@@ -92,7 +93,10 @@ function renderCards() {
 
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "../assets/images/frontside.jpg";
+    cardFrontSideImgElement.src =
+      getSelectedLevel() === "level-2"
+        ? "../assets/images/level-2-card-background.webp"
+        : "../assets/images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
@@ -114,6 +118,14 @@ function renderCards() {
 
     cardContainer.appendChild(cardElement);
   });
+
+  // use grid wide when not level 1
+  const level = getSelectedLevel();
+  if (level != "level-1") {
+    cardContainer.classList.add("grid-wide");
+  } else {
+    cardContainer.classList.add("grid-small");
+  }
 
   cardContainer.addEventListener("click", handleCardClick);
 }
@@ -186,6 +198,12 @@ function startTimer() {
 function stopTimer() {
   clearInterval(intervalID);
   intervalID = null;
+}
+
+function getTimeLimit() {
+  const level = getSelectedLevel();
+  const timeLimit = level === "level-1" ? 60 : 90;
+  return timeLimit;
 }
 
 function checkLosingCondition() {
