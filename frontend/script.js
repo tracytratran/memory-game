@@ -64,11 +64,11 @@ async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
     const response = await fetch(`http://localhost:8000/api/cards?category=${level}`);
-
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
+
   } catch (e) {
     console.log(e);
   }
@@ -89,7 +89,9 @@ function renderCards() {
 
     //frontside img
     const cardFrontSideImgElement = document.createElement("img");
-    cardFrontSideImgElement.src = "../assets/images/frontside.jpg";
+    cardFrontSideImgElement.src = getSelectedLevel() === "level-2"
+      ? "../assets/images/level-2-card-background.webp"
+      : "../assets/images/frontside.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
@@ -112,7 +114,7 @@ function renderCards() {
     cardContainer.appendChild(cardElement);
   });
 
-  //  level 2
+  // use grid wide when not level 1
   const level = getSelectedLevel();
   if (level != "level-1") {
     cardContainer.classList.add("grid-wide")

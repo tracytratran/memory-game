@@ -11,20 +11,25 @@ body {
   background-size: cover;
   color: white;
   position: relative;
-  margin: 0;
-  padding: 0;
+  overflow: hidden;
 }
 
 .container {
   text-align: center;
   position: relative;
   z-index: 1;
-  width: 95%;
+  width: 90%;
   max-width: 56.25rem;
   margin: 2.5rem auto;
 }
 
-.main-menu:not(.hidden) {
+.container h1 {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 1.25rem rgba(0, 150, 255, 0.6);
+}
+
+.main-menu {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,21 +37,18 @@ body {
   min-height: 100vh;
 }
 
-.container h1 {
-  font-size: 5rem;
-  margin: 1.5rem;
-  letter-spacing: 0.125rem;
-  text-shadow: 0 0 1.25rem rgba(0, 150, 255, 0.6);
+.main-menu.hidden {
+  display: none;
 }
 
 .level-selection {
-  margin-bottom: 1.875rem;
   display: flex;
-  background: linear-gradient(135deg, #7a1c71, #4a148c);
-  padding: 1.25rem;
-  gap: 1.25rem;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 1.875rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #7a1c71, #4a148c);
   border-radius: 1.25rem;
   box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
 }
@@ -56,11 +58,11 @@ body {
   padding: 0.75rem 1.5625rem;
   border-radius: 3.125rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   font-weight: bold;
-  color: #ffffff;
   font-size: 1rem;
+  color: #ffffff;
   text-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
 }
 
 .level-selection label:hover {
@@ -90,19 +92,23 @@ body {
   padding: 1em 2em;
 }
 
-.start-button:hover,
-.button:hover {
+.button:hover,
+.start-button:hover {
   transform: scale(1);
   box-shadow: 0 0 2.1875rem rgba(0, 150, 255, 0.9);
 }
 
-.hidden {
-  display: none;
+.restart-button,
+.main-menu-button {
+  padding: 1em 1em;
+  margin: 1.5em;
+  border-radius: 999px;
+  font-size: 0.9rem;
 }
 
 .card {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 2 / 1.8;
   perspective: 62.5rem;
   cursor: pointer;
   position: relative;
@@ -122,16 +128,28 @@ body {
 
 .front-side img,
 .back-side img {
-  box-sizing: content-box;
   width: 100%;
+  height: 100%;
   background-position: center;
   background-size: contain;
   border-radius: 0.625rem;
-  height: 100%;
+  box-sizing: content-box;
 }
 
 .back-side {
   transform: rotateY(180deg);
+}
+
+.card.flipped .front-side {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .back-side {
+  transform: rotateY(0deg);
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card-container {
@@ -142,19 +160,6 @@ body {
 
 .card-container.grid-wide {
   grid-template-columns: repeat(6, 1fr);
-
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card.flipped .front-side {
-  transform: rotateY(180deg);
-}
-
-.card.flipped .back-side {
-  transform: rotateY(0deg);
 }
 
 .game-info {
@@ -187,45 +192,6 @@ body {
   transition: opacity 300ms ease;
 }
 
-@keyframes flash {
-
-  0%,
-  100% {
-    transform: scale(1.1);
-    box-shadow: 0 0 2.5rem #00ff00;
-  }
-
-  50% {
-    transform: scale(1.2);
-    box-shadow: 0 0 3.125rem #00ff00;
-  }
-}
-
-.unmatched {
-  animation: shake 0.5s ease-in-out 1;
-  box-shadow: 0 0 3.125rem #d60101;
-}
-
-@keyframes shake {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-0.625rem);
-  }
-
-  50% {
-    transform: translateX(0.625rem);
-  }
-
-  75% {
-    transform: translateX(-0.625rem);
-  }
-}
-
 .play-again-button {
   text-decoration: none;
 }
@@ -253,15 +219,6 @@ body {
   text-shadow: 0 0 0.5rem #901661;
 }
 
-.restart-button,
-.main-menu-button {
-  padding: 1em 1em;
-  margin: 1.5em;
-  border-radius: 999px;
-  margin-bottom: 1.25rem;
-  font-size: 1.2rem;
-}
-
 .button-seletion {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -270,9 +227,14 @@ body {
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
+
 @media (max-width: 600px) {
   .container h1 {
-    font-size: 2rem;
+    font-size: 3rem;
+    margin: 0.5em;
   }
 
   .level-selection label {
@@ -280,16 +242,19 @@ body {
   }
 
   .card-container {
-    grid-template-columns: repeat(4, 1fr);
-    padding: 0.625rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.625rem;
   }
 
-  .container h1 {
-    font-size: 3rem;
+  .card-container.grid-wide {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .game-info {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+
     gap: 0.625rem;
     font-size: 1rem;
   }
@@ -304,10 +269,10 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    overflow: hidden;
   }
 
   .button-seletion {
-    display: grid;
     margin: 0.5em;
   }
 
@@ -317,17 +282,11 @@ body {
     font-size: 0.9rem;
   }
 
-  .main-menu:not(.hidden) {
-    display: flex;
-  }
-
   .win-screen {
     top: 60%;
     min-width: 30rem;
-  }
-
-  .card-container.grid-wide {
-    grid-template-columns: repeat(4, 1fr);
+    padding: 1em;
+    height: 30%;
   }
 }
 
