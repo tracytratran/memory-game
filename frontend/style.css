@@ -7,10 +7,12 @@
 body {
   min-height: 100vh;
   font-family: "sans-serif";
-  background: url("../assets/images/background.jpg") no-repeat center center fixed;
+  background: url("../assets/images/background.jpg") no-repeat center center
+    fixed;
   background-size: cover;
   color: white;
   position: relative;
+  overflow: hidden;
 }
 
 .container {
@@ -45,7 +47,6 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.25rem;
-  margin-bottom: 1.875rem;
   padding: 1.25rem;
   background: linear-gradient(135deg, #7a1c71, #4a148c);
   border-radius: 1.25rem;
@@ -83,26 +84,16 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 0 1.25rem rgba(0, 150, 255, 0.5);
-}
-
-.start-button {
   font-size: 1.2rem;
   font-weight: bold;
   padding: 1em 2em;
+  margin: 1em;
 }
 
 .button:hover,
 .start-button:hover {
   transform: scale(1);
   box-shadow: 0 0 2.1875rem rgba(0, 150, 255, 0.9);
-}
-
-.restart-button,
-.main-menu-button {
-  padding: 1em 1em;
-  margin: 1.5em;
-  border-radius: 999px;
-  font-size: 0.9rem;
 }
 
 .card {
@@ -191,10 +182,6 @@ body {
   transition: opacity 300ms ease;
 }
 
-.play-again-button {
-  text-decoration: none;
-}
-
 .win-screen {
   position: absolute;
   top: 50%;
@@ -258,27 +245,12 @@ body {
     font-size: 1rem;
   }
 
-  .main-page-button {
-    margin: 1.25rem 0;
-    padding: 0.625rem;
-  }
-
   .main-menu {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-  }
-
-  .button-seletion {
-    margin: 0.5em;
-  }
-
-  .restart-button,
-  .main-menu-button {
-    margin: 0.3125rem;
-    font-size: 0.9rem;
   }
 
   .win-screen {
