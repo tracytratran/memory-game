@@ -6,7 +6,7 @@
 
 body {
   min-height: 100vh;
-  font-family: "sans-serif";
+  font-family: 'Orbitron', sans-serif;
   background: url("../assets/images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
@@ -87,6 +87,20 @@ body {
   font-weight: bold;
   padding: 1em 2em;
   margin: 1em;
+  font-family: 'Orbitron', sans-serif;
+  ;
+}
+
+.button-seletion {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.button-seletion button {
+  max-width: 150px;
+  width: 100%;
+
 }
 
 .button:hover,
@@ -147,6 +161,12 @@ body {
   gap: 0.625rem;
 }
 
+.card-container.grid-small {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 70%;
+  margin: 0 auto;
+}
+
 .card-container.grid-wide {
   grid-template-columns: repeat(6, 1fr);
 }
@@ -204,13 +224,6 @@ body {
   text-shadow: 0 0 0.5rem #901661;
 }
 
-.button-seletion {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
 
 .hidden {
   display: none;

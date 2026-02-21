@@ -120,6 +120,8 @@ function renderCards() {
   const level = getSelectedLevel();
   if (level != "level-1") {
     cardContainer.classList.add("grid-wide");
+  } else {
+    cardContainer.classList.add("grid-small")
   }
 
   cardContainer.addEventListener("click", handleCardClick);
