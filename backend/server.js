@@ -64,7 +64,7 @@ db.run(
           },
           {
             category: "level-2",
-            link: "https://images.unsplash.com/photo-1549144511-f099e773c147-paris",
+            link: "https://images.unsplash.com/photo-1549144511-f099e773c147",
           },
           {
             category: "level-2",

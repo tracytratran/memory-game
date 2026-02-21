@@ -112,6 +112,12 @@ function renderCards() {
     cardContainer.appendChild(cardElement);
   });
 
+  //  level 2
+  const level = getSelectedLevel();
+  if (level != "level-1") {
+    cardContainer.classList.add("grid-wide")
+  }
+
   cardContainer.addEventListener("click", handleCardClick);
 }
 

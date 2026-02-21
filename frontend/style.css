@@ -6,7 +6,7 @@
 
 body {
   min-height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "sans-serif";
   background: url("../assets/images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
@@ -19,9 +19,9 @@ body {
   text-align: center;
   position: relative;
   z-index: 1;
-  width: 95vw;
-  max-width: 900px;
-  margin: 40px auto;
+  width: 95%;
+  max-width: 56.25rem;
+  margin: 2.5rem auto;
 }
 
 .main-menu:not(.hidden) {
@@ -34,54 +34,54 @@ body {
 
 .container h1 {
   font-size: 5rem;
-  margin-bottom: 40px;
-  letter-spacing: 2px;
-  text-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+  margin: 1.5rem;
+  letter-spacing: 0.125rem;
+  text-shadow: 0 0 1.25rem rgba(0, 150, 255, 0.6);
 }
 
 .level-selection {
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
   display: flex;
   background: linear-gradient(135deg, #7a1c71, #4a148c);
-  padding: 20px;
-  gap: 20px;
+  padding: 1.25rem;
+  gap: 1.25rem;
   justify-content: center;
   flex-wrap: wrap;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 1.25rem;
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
 }
 
 .level-selection label {
   background-color: rgba(255, 255, 255, 0.1);
-  padding: 12px 25px;
-  border-radius: 50px;
+  padding: 0.75rem 1.5625rem;
+  border-radius: 3.125rem;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: bold;
   color: #ffffff;
   font-size: 1rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.5);
 }
 
 .level-selection label:hover {
   background-color: rgba(255, 255, 255, 0.25);
   transform: scale(1.05);
-  box-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 0.625rem #fff;
 }
 
 .level-selection input[type="radio"] {
-  margin-right: 8px;
+  margin-right: 0.5rem;
   accent-color: #00c6ff;
 }
 
 .button {
   background: linear-gradient(45deg, #007bff, #00c6ff);
   border: none;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+  box-shadow: 0 0 1.25rem rgba(0, 150, 255, 0.5);
 }
 
 .start-button {
@@ -92,8 +92,8 @@ body {
 
 .start-button:hover,
 .button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 35px rgba(0, 150, 255, 0.9);
+  transform: scale(1);
+  box-shadow: 0 0 2.1875rem rgba(0, 150, 255, 0.9);
 }
 
 .hidden {
@@ -103,7 +103,7 @@ body {
 .card {
   width: 100%;
   aspect-ratio: 1 / 1;
-  perspective: 1000px;
+  perspective: 62.5rem;
   cursor: pointer;
   position: relative;
 }
@@ -112,7 +112,7 @@ body {
   width: 100%;
   height: 100%;
   position: absolute;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,7 +126,7 @@ body {
   width: 100%;
   background-position: center;
   background-size: contain;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   height: 100%;
 }
 
@@ -137,9 +137,13 @@ body {
 .card-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 0.625rem;
 }
 
+.card-container.grid-wide {
+  grid-template-columns: repeat(6, 1fr);
+
+}
 
 .card:hover {
   transform: scale(1.05);
@@ -156,19 +160,19 @@ body {
 .game-info {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  margin-bottom: 20px;
+  gap: 2.5rem;
+  margin-bottom: 1.25rem;
   font-size: 1.2rem;
 }
 
 .game-info p {
   background: rgba(255, 255, 255, 0.1);
-  padding: 10px 25px;
-  border-radius: 10px;
+  padding: 0.625rem 1.5625rem;
+  border-radius: 0.625rem;
   font-weight: bold;
-  min-width: 80px;
+  min-width: 5rem;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.0625rem;
 }
 
 .game-info p span {
@@ -188,18 +192,18 @@ body {
   0%,
   100% {
     transform: scale(1.1);
-    box-shadow: 0 0 40px #00ff00;
+    box-shadow: 0 0 2.5rem #00ff00;
   }
 
   50% {
     transform: scale(1.2);
-    box-shadow: 0 0 50px #00ff00;
+    box-shadow: 0 0 3.125rem #00ff00;
   }
 }
 
 .unmatched {
   animation: shake 0.5s ease-in-out 1;
-  box-shadow: 0 0 50px #d60101;
+  box-shadow: 0 0 3.125rem #d60101;
 }
 
 @keyframes shake {
@@ -210,15 +214,15 @@ body {
   }
 
   25% {
-    transform: translateX(-10px);
+    transform: translateX(-0.625rem);
   }
 
   50% {
-    transform: translateX(10px);
+    transform: translateX(0.625rem);
   }
 
   75% {
-    transform: translateX(-10px);
+    transform: translateX(-0.625rem);
   }
 }
 
@@ -232,30 +236,21 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgb(54 13 105);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(0.3125rem);
   color: #ffffff;
-  padding: 25px 40px;
-  border-radius: 15px;
+  padding: 1.5625rem 2.5rem;
+  border-radius: 0.9375rem;
   text-align: center;
   z-index: 20;
-  min-width: 40rem;
   max-width: 90%;
   height: 11rem;
-  box-shadow: 0 0 20px #ad42fe;
+  box-shadow: 0 0 1.25rem #ad42fe;
 }
 
 .win-screen h1 {
   font-size: 2.5rem;
   color: #fe3efe;
-  margin-bottom: 10px;
-  text-shadow: 0 0 8px #901661;
-}
-
-.matched,
-.time-up {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 300ms ease;
+  text-shadow: 0 0 0.5rem #901661;
 }
 
 .restart-button,
@@ -263,7 +258,7 @@ body {
   padding: 1em 1em;
   margin: 1.5em;
   border-radius: 999px;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   font-size: 1.2rem;
 }
 
@@ -275,7 +270,6 @@ body {
   text-align: center;
 }
 
-/*Responsive*/
 @media (max-width: 600px) {
   .container h1 {
     font-size: 2rem;
@@ -286,9 +280,8 @@ body {
   }
 
   .card-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0.625rem;
   }
 
   .container h1 {
@@ -297,14 +290,13 @@ body {
 
   .game-info {
     flex-direction: column;
-    gap: 10px;
+    gap: 0.625rem;
     font-size: 1rem;
   }
 
   .main-page-button {
-    margin: 20px 0;
-    text-decoration: none;
-    padding: 10px;
+    margin: 1.25rem 0;
+    padding: 0.625rem;
   }
 
   .main-menu {
@@ -316,28 +308,32 @@ body {
 
   .button-seletion {
     display: grid;
-    grid-template-columns: 1fr;
-
-
+    margin: 0.5em;
   }
 
   .restart-button,
   .main-menu-button {
-    margin: 0.5em;
+    margin: 0.3125rem;
+    font-size: 0.9rem;
   }
 
   .main-menu:not(.hidden) {
     display: flex;
   }
+
+  .win-screen {
+    top: 60%;
+    min-width: 30rem;
+  }
+
+  .card-container.grid-wide {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media (max-width: 400px) {
-  .card-container {
-    grid-template-columns: 1fr;
-  }
-
   .win-screen {
     min-width: 90%;
-    padding: 20px;
+    padding: 1.25rem;
   }
 }
