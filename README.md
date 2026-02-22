@@ -1,6 +1,8 @@
 # Memory Game
 
-A web-based **Memory Game** using **JavaScript, HTML, CSS**, with **Node.js + Express + SQLite** backend. Match all card pairs before time runs out!
+Match all card pairs before time runs out!
+
+A web-based **Memory Game** using **JavaScript, HTML, CSS**, with **Node.js + Express + SQLite** backend. 
 
 ## Features
 
