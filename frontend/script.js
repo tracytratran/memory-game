@@ -212,8 +212,9 @@ function checkLosingCondition() {
     cardContainer.classList.add("time-up");
 
     loseScreen.innerHTML = `
-      <h1>Time's up!</h1>
-      <h1>You lose!</h1>
+       <h1>You lose!</h1>
+      <img src="../assets/images/timeout.gif" alt="Minions Celebrate" class="win-minion-gif" />
+     
     `;
 
     loseScreen.classList.remove("hidden");
@@ -255,6 +256,7 @@ function checkWinningCondition() {
 
     winScreen.innerHTML = `
       <h1>🎉 You Win! 🎉</h1>
+       <img src="../assets/images/yay-moinyin.gif" alt="Minions Celebrate" class="win-minion-gif" />
       <p class="win-stats">You finished in ${counter} moves</p>
       <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
     `;
