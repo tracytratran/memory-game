@@ -163,6 +163,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   max-width: 70%;
   margin: 0 auto;
+  opacity: 0.9;
 }
 
 .card-container.grid-wide {

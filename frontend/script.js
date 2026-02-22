@@ -96,7 +96,7 @@ function renderCards() {
     cardFrontSideImgElement.src =
       getSelectedLevel() === "level-2"
         ? "../assets/images/level-2-card-background.webp"
-        : "../assets/images/frontside.jpg";
+        : "../assets/images/level1-bg.jpg";
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
