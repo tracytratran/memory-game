@@ -1,14 +1,22 @@
 # Memory Game
 
-A web-based **Memory Game** using **HTML, CSS, JavaScript**, with a **Node.js + Express + SQLite** backend. Match all card pairs before time runs out!
+A web-based **Memory Game** using **JavaScript, HTML, CSS**, with **Node.js + Express + SQLite** backend. Match all card pairs before time runs out!
 
 ## Features
 
 - Two difficulty levels
 - Timer and move counter
-- Responsive design
 - Cards loaded from SQLite via API
-- Restart and win screen with stats
+- Restart button and back to menu button
+- Game result screen with stats
+- Responsive design
+
+## How to Play
+
+1. Select a level of difficulty.
+2. Click **Start Game**.
+3. Flip cards to find pairs.
+4. Match all pairs before time runs out to win!
 
 ## Setup
 
@@ -26,16 +34,13 @@ Runs at `http://localhost:8000`.
 
 Open `frontend/index.html` in a browser and start the game.
 
-## How to Play
+## Deployed App
 
-1. Select a difficulty level.
-2. Click **Start Game**.
-3. Flip cards to find pairs.
-4. Match all pairs before time runs out to win!
+Play the game at `https://tracytratran.github.io/memory-game/frontend/`.
 
 ## Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript
+- **Frontend:** JavaScript, HTML, CSS
 - **Backend:** Node.js, Express
 - **Database:** SQLite
 
