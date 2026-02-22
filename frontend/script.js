@@ -212,8 +212,9 @@ function checkLosingCondition() {
     cardContainer.classList.add("time-up");
 
     loseScreen.innerHTML = `
-      <h1>Time's up!</h1>
-      <h1>You lose!</h1>
+       <h1>You lose!</h1>
+      <img src="../assets/images/timeout.gif" alt="Minions Celebrate" class="win-minion-gif" />
+     
     `;
 
     loseScreen.classList.remove("hidden");
