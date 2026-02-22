@@ -23,27 +23,27 @@ db.run(
         const cards = [
           {
             category: "level-1",
-            link: "https://picsum.photos/id/13/200",
+            link: "https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             category: "level-1",
-            link: "https://picsum.photos/id/155/200",
+            link: "https://images.unsplash.com/photo-1596854307809-6e754c522f95?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             category: "level-1",
-            link: "https://picsum.photos/id/193/200",
+            link: "https://images.unsplash.com/photo-1597838816882-4435b1977fbe?q=80&w=1449&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             category: "level-1",
-            link: "https://picsum.photos/id/211/200",
+            link: "https://plus.unsplash.com/premium_photo-1723708857381-82e3b34187b5?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             category: "level-1",
-            link: "https://picsum.photos/id/237/200",
+            link: "https://images.unsplash.com/photo-1735989967755-706e5edcb44b?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             category: "level-1",
-            link: "https://picsum.photos/id/250/200",
+            link: "https://images.unsplash.com/photo-1596797882870-8c33deeac224?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           // level 2
           {
