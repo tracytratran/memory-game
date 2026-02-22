@@ -255,6 +255,7 @@ function checkWinningCondition() {
 
     winScreen.innerHTML = `
       <h1>🎉 You Win! 🎉</h1>
+       <img src="../assets/images/yay-moinyin.gif" alt="Minions Celebrate" class="win-minion-gif" />
       <p class="win-stats">You finished in ${counter} moves</p>
       <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
     `;
