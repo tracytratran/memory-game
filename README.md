@@ -36,7 +36,7 @@ Open `frontend/index.html` in a browser and start the game.
 
 ## Deployed App
 
-Play the game at `https://tracytratran.github.io/memory-game/frontend/`(https://tracytratran.github.io/memory-game/frontend/).
+Play the game at https://tracytratran.github.io/memory-game/frontend/.
 
 ## Tech Stack
 
