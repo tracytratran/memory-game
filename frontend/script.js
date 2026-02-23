@@ -8,6 +8,14 @@ const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
 const loseScreen = document.querySelector(".lose-screen");
+// 🔴 [blocking] Bug: this hardcoded timeLimit=60 is used in checkWinningCondition()
+// but Level 2 has a 90s limit via getTimeLimit(). The win screen will show wrong "Time taken" for Level 2.
+// Fix: remove this const and use getTimeLimit() in checkWinningCondition() instead.
+
+// 🟡 [important] Consider splitting the file into 
+// - config.js for constants like time limits and API URLs
+// - utils.js for helper functions like shuffle and double
+// - main.js for the game logic and event handlers
 const timeLimit = 60;
 
 let cardsData = [];
@@ -66,6 +74,7 @@ function cleanUp() {
 async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
+    // 🔴 [blocking] Hardcoded production URL, move to a config variable or use a relative URL.
     const response = await fetch(
       `https://memoga.onrender.com/api/cards?category=${level}`,
     );
@@ -74,6 +83,8 @@ async function fetchCardsData() {
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
+    // 🟡 [important] Use console.error(e) instead of console.log(e), and show user-facing feedback (e.g. "Failed to load cards")
+    // Fix: add a user-friendly error message in the UI, e.g.:
     console.log(e);
   }
 }
@@ -145,6 +156,8 @@ function handleCardClick(event) {
     increaseCounter();
   }
 
+  // 🟡 [important] toggle() allows unflipping an already flipped card by clicking it again.
+  // Consider using .add("flipped") and adding a guard: if (card.classList.contains("flipped")) return;
   card.classList.toggle("flipped");
   const cardIndex = card.id.split("-")[1];
   cardsData[cardIndex].isOpen = !cardsData[cardIndex].isOpen;
@@ -160,6 +173,8 @@ function double(arr) {
   return [...arr, ...copiedArr];
 }
 
+// 🟡 [important] This shuffle works but is inefficient (random retry until a free slot is found).
+// Consider using an alternative algorithm :)
 function shuffle(arr) {
   if (!arr) throw new Error("Invalid input!");
 
@@ -185,7 +200,7 @@ function increaseCounter() {
 
 function startTimer() {
   if (intervalID !== null) return;
-
+  // 🟡 [important] Redundant check: the line above already returns if intervalID !== null, so this if is always true
   if (intervalID === null) {
     intervalID = setInterval(function () {
       timer--;
@@ -258,6 +273,8 @@ function checkWinningCondition() {
       <h1>🎉 You Win! 🎉</h1>
        <img src="../assets/images/yay-moinyin.gif" alt="Minions Celebrate" class="win-minion-gif" />
       <p class="win-stats">You finished in ${counter} moves</p>
+      <!-- 🔴 [blocking] Bug here: timeLimit is hardcoded to 60, but Level 2 uses 90s.
+           Fix: replace timeLimit with getTimeLimit() → Time taken: getTimeLimit() - timer -->
       <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
     `;
 

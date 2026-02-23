@@ -126,6 +126,10 @@ app.get("/api/cards", (req, res) => {
 
   const category = req.query.category;
   if (category) {
+    // 🔴 [blocking] SQL Injection vulnerability! User input is directly interpolated into the query.
+    // Fix: use a parameterized query instead:
+    //   sql += " WHERE category = ?";
+    //   db.all(sql, [category], (err, rows) => { ... });
     sql += ` WHERE category = '${category}' `;
   }
 

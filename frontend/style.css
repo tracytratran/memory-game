@@ -1,3 +1,8 @@
+/* 🟡 [important] this file is very long, it would be nice
+to split it into multiple smaller files (e.g. main.css, card.css, win-lose.css) and import them in index.html 
+for better maintainability. Also, consider using CSS variables for colors and spacing to make future theme changes easier.
+
+*/
 * {
   box-sizing: border-box;
   padding: 0;
@@ -90,6 +95,7 @@ body {
   font-family: "Orbitron", sans-serif;
 }
 
+/* 🟡 [important] Typo: "button-seletion" → "button-selection" (also fix in HTML) */
 .button-seletion {
   display: flex;
   justify-content: center;
@@ -101,6 +107,7 @@ body {
   width: 100%;
 }
 
+/* 🟡 [important] transform: scale(1) has no visible effect — did you mean scale(1.05)? */
 .button:hover,
 .start-button:hover {
   transform: scale(1);
@@ -115,6 +122,7 @@ body {
   position: relative;
 }
 
+/* 🎉 Good work, keep it up! 3D card flip with perspective + backface-visibility — well implemented */
 .card div {
   width: 100%;
   height: 100%;
@@ -195,6 +203,7 @@ body {
   font-size: 1.3rem;
 }
 
+/* 🔴 [blocking] Duplicate rule — .matched, .time-up is defined again on lines 296-301. Remove one to avoid confusion */
 .matched,
 .time-up {
   opacity: 0;
@@ -309,7 +318,7 @@ body {
   font-size: 1.2rem;
 }
 
-/*Responsive*/
+/* 🟡 [important] Comment says "Responsive" but these rules below are NOT inside a @media query — misleading comment */
 .win-screen h1 {
   color: #fe3efe;
 }
@@ -325,6 +334,7 @@ body {
   display: block;
 }
 
+/* 🎉 Good work, keep it up! Two responsive breakpoints (600px and 400px) — good mobile support */
 @media (max-width: 600px) {
   .container h1 {
     font-size: 2.5rem;
