@@ -185,13 +185,11 @@ function increaseCounter() {
 function startTimer() {
   if (intervalID !== null) return;
 
-  if (intervalID === null) {
-    intervalID = setInterval(function () {
-      timer--;
-      timerEl.textContent = timer;
-      checkLosingCondition();
-    }, 1000);
-  }
+  intervalID = setInterval(function () {
+    timer--;
+    timerEl.textContent = timer;
+    checkLosingCondition();
+  }, 1000);
 }
 
 function stopTimer() {
