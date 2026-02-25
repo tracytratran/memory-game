@@ -1,13 +1,16 @@
-const mainMenu = document.querySelector(".main-menu");
-const gameArea = document.querySelector(".game-area");
-const cardContainer = document.querySelector(".card-container");
-const startButton = document.querySelector(".start-button");
-const restartButton = document.querySelector(".restart-button");
-const counterEl = document.querySelector("#move-counter");
-const timerEl = document.querySelector("#timer");
+import { API_URL } from "./config.js";
+import { $, double, shuffle } from "./utils.js";
+
+const mainMenu = $(".main-menu");
+const gameArea = $(".game-area");
+const cardContainer = $(".card-container");
+const startButton = $(".start-button");
+const restartButton = $(".restart-button");
+const counterEl = $("#move-counter");
+const timerEl = $("#timer");
 const cards = document.querySelectorAll(".card");
-const winScreen = document.querySelector(".win-screen");
-const loseScreen = document.querySelector(".lose-screen");
+const winScreen = $(".win-screen");
+const loseScreen = $(".lose-screen");
 
 let cardsData = [];
 let counter;
@@ -65,9 +68,7 @@ function cleanUp() {
 async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
-    const response = await fetch(
-      `${window.APP_CONFIG.API_URL}/api/cards?category=${level}`,
-    );
+    const response = await fetch(`${API_URL}/api/cards?category=${level}`);
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
@@ -150,31 +151,6 @@ function handleCardClick(event) {
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
-}
-
-function double(arr) {
-  if (!arr) throw new Error("Invalid input!");
-
-  const copiedArr = JSON.parse(JSON.stringify(arr));
-  return [...arr, ...copiedArr];
-}
-
-function shuffle(arr) {
-  if (!arr) throw new Error("Invalid input!");
-
-  const shuffledArr = [];
-  const generatedIndex = {};
-  let randomIndex;
-
-  for (const el of arr) {
-    do {
-      randomIndex = Math.floor(Math.random() * arr.length);
-    } while (generatedIndex[randomIndex]);
-
-    generatedIndex[randomIndex] = true;
-    shuffledArr[randomIndex] = el;
-  }
-  return shuffledArr;
 }
 
 function increaseCounter() {
