@@ -139,10 +139,6 @@ function handleCardClick(event) {
     return;
   }
 
-  // if (!card.classList.contains("flipped")) {
-  //   increaseCounter();
-  // }
-
   const cardIndex = card.id.split("-")[1];
   const cardState = cardsData[cardIndex];
 
