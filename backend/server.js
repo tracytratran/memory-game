@@ -123,13 +123,14 @@ app.get("/", (req, res) => {
 //endpoint to get all cards from SQLite
 app.get("/api/cards", (req, res) => {
   let sql = "SELECT * FROM cards";
-
+  const params = []
   const category = req.query.category;
   if (category) {
-    sql += ` WHERE category = '${category}' `;
+    sql += " WHERE category = ?";
+    params.push(category)
   }
 
-  db.all(sql, (err, rows) => {
+  db.all(sql, params, (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "Database error" });
