@@ -91,7 +91,7 @@ function renderCards() {
     const cardFrontSideElement = document.createElement("div");
     cardFrontSideElement.classList.add("front-side");
 
-    //frontside img
+    // frontside img
     const cardFrontSideImgElement = document.createElement("img");
     cardFrontSideImgElement.src =
       getSelectedLevel() === "level-2"
@@ -103,7 +103,7 @@ function renderCards() {
     const cardBackSideElement = document.createElement("div");
     cardBackSideElement.classList.add("back-side");
 
-    //backside img
+    // backside img
     const cardBackSideImgElement = document.createElement("img");
     cardBackSideImgElement.src = card.name;
     cardBackSideImgElement.alt = `Card backside ${index}`;
@@ -112,7 +112,7 @@ function renderCards() {
     cardFrontSideElement.appendChild(cardFrontSideImgElement);
     cardBackSideElement.appendChild(cardBackSideImgElement);
 
-    //append sides to card
+    // append sides to card
     cardElement.appendChild(cardFrontSideElement);
     cardElement.appendChild(cardBackSideElement);
 
@@ -139,15 +139,19 @@ function handleCardClick(event) {
     return;
   }
 
-  startTimer();
+  // if (!card.classList.contains("flipped")) {
+  //   increaseCounter();
+  // }
 
-  if (!card.classList.contains("flipped")) {
-    increaseCounter();
-  }
-
-  card.classList.toggle("flipped");
   const cardIndex = card.id.split("-")[1];
-  cardsData[cardIndex].isOpen = !cardsData[cardIndex].isOpen;
+  const cardState = cardsData[cardIndex];
+
+  if (cardState.isOpen || cardState.isMatched) return;
+
+  card.classList.add("flipped");
+  cardState.isOpen = true;
+  startTimer();
+  increaseCounter();
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
@@ -187,7 +191,7 @@ function startTimer() {
   if (intervalID !== null) return;
 
   if (intervalID === null) {
-    intervalID = setInterval(function () {
+    intervalID = setInterval(() => {
       timer--;
       timerEl.textContent = timer;
       checkLosingCondition();
@@ -274,7 +278,7 @@ function closeUnmatchedCards(openCardIndex) {
   ) {
     setTimeout(function () {
       openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.toggle("flipped");
+        document.querySelector(`#card-${index}`).classList.remove("flipped");
         cardsData[index].isOpen = false;
       });
     }, 1000);
