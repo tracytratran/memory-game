@@ -1,0 +1,15 @@
+:root {
+  --primary-blue: #00c6ff;
+  --secondary-blue: #007bff;
+  --purple: #7a1c71;
+  --dark-purple: #4a148c;
+  --white: #ffffff;
+  --font: "Orbitron", sans-serif;
+
+
+  --radius: 10px;
+  --radius-large: 50px;
+
+  --shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+  --transition: 0.3s ease;
+}

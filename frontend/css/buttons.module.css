@@ -1,0 +1,46 @@
+.button {
+    background: linear-gradient(45deg, var(--secondary-blue), var(--primary-blue));
+    border: none;
+    border-radius: var(--radius-large);
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 1em 2em;
+    margin: 1em;
+    font-family: var(--font);
+}
+
+.button:hover,
+.start-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 2.1875rem rgba(0, 150, 255, 0.9);
+}
+
+.button-selection {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.button-selection button {
+    max-width: 150px;
+    width: 100%;
+}
+
+.restart-button,
+.main-menu-button {
+    padding: 1em 1em;
+    margin: 1.5em;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.play-again-button {
+    text-decoration: none;
+}
