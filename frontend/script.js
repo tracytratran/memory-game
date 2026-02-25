@@ -1,6 +1,7 @@
 const mainMenu = document.querySelector(".main-menu");
 const gameArea = document.querySelector(".game-area");
 const cardContainer = document.querySelector(".card-container");
+const mainMenuButton = document.querySelector(".main-menu-button");
 const startButton = document.querySelector(".start-button");
 const restartButton = document.querySelector(".restart-button");
 const counterEl = document.querySelector("#move-counter");
@@ -34,6 +35,10 @@ restartButton.addEventListener("click", () => {
   cleanUp();
   cardContainer.innerHTML = "";
   init();
+});
+
+mainMenuButton.addEventListener("click", () => {
+  location.reload();
 });
 
 function getSelectedLevel() {
