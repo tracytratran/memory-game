@@ -8,6 +8,7 @@ const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
 const loseScreen = document.querySelector(".lose-screen");
+const errorScreen = document.querySelector(".error-screen");
 const timeLimit = 60;
 
 let cardsData = [];
@@ -74,7 +75,11 @@ async function fetchCardsData() {
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
-    console.log(e);
+    console.error(e);
+
+    errorScreen.innerHTML = `
+      <h1>Failed to load cards...</h1>
+    `;
   }
 }
 
