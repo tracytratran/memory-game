@@ -17,6 +17,6 @@
 }
 
 .game-info p span {
-    color: #00c6ff;
+    color: var(--primary-blue);
     font-size: 1.3rem;
 }

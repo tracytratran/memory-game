@@ -8,15 +8,12 @@
     box-shadow: var(--shadow);
     font-size: 1.2rem;
     font-weight: bold;
-    font-size: 1.2rem;
-    font-weight: bold;
     padding: 1em 2em;
     margin: 1em;
     font-family: var(--font);
 }
 
-.button:hover,
-.start-button:hover {
+.button:hover{
     transform: scale(1.1);
     box-shadow: 0 0 2.1875rem rgba(0, 150, 255, 0.9);
 }

@@ -26,7 +26,7 @@
 .lose-screen h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: white;
+    color: var(--white);
 }
 
 .lose-screen h1 {
@@ -42,7 +42,7 @@
 }
 
 .win-screen .win-stats {
-    color: #347ecc;
+    color: var(--win-stats-color);
     font-size: 1.1rem;
 }
 
@@ -55,8 +55,4 @@
     max-width: 80%;
     margin: 1rem auto;
     display: block;
-}
-
-.hidden {
-    display: none;
 }

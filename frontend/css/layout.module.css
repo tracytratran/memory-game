@@ -32,7 +32,7 @@
   justify-content: center;
   gap: 1.25rem;
   padding: 1.25rem;
-  background: linear-gradient(135deg, #7a1c71, #4a148c);
+  background: linear-gradient(135deg, var(--purple), var(--dark-purple));
   border-radius: 1.25rem;
   box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
 }
