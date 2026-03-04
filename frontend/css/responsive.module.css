@@ -1,0 +1,72 @@
+@media (max-width: 600px) {
+    .container h1 {
+        font-size: 2.5rem;
+        margin: 0.5em;
+    }
+
+    .level-selection label {
+        padding: 1em 2em;
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.625rem;
+    }
+
+    .card-container.grid-wide {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .game-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.625rem;
+        font-size: 1rem;
+    }
+
+    .main-menu {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+
+    .card-container.grid-small {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .restart-button,
+    .main-menu-button {
+        padding: 0.9em 1em;
+        font-size: 0.85rem;
+        width: auto;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+
+    .win-screen,
+    .lose-screen {
+        width: 95%;
+        padding: 1rem;
+        min-height: 160px;
+    }
+
+    .win-screen h1,
+    .lose-screen h1 {
+        font-size: 1.5rem;
+    }
+
+    .win-screen p,
+    .lose-screen p {
+        font-size: 0.95rem;
+    }
+}

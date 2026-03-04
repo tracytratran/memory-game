@@ -1,0 +1,58 @@
+.win-screen,
+.lose-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(54, 13, 105, 0.85);
+    backdrop-filter: blur(10px);
+    color: var(--white);
+    padding: 2rem 3rem;
+    border-radius: var(--radius);
+    text-align: center;
+    z-index: 20;
+    max-width: 90%;
+    width: 400px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 2rem rgba(255, 0, 255, 0.5);
+    transition: all var(--transition);
+}
+
+.win-screen h1,
+.lose-screen h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+}
+
+.lose-screen h1 {
+    color: var(--white);
+}
+
+.win-screen p,
+.lose-screen p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: var(--primary-blue);
+    font-weight: bold;
+}
+
+.win-screen .win-stats {
+    color: var(--win-stats-color);
+    font-size: 1.1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.win-minion-gif {
+    width: 200px;
+    max-width: 80%;
+    margin: 1rem auto;
+    display: block;
+}

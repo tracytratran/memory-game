@@ -1,0 +1,15 @@
+@import "./variables.module.css";
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: var(--font);
+    background: url("../../assets/images/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: var(--white);
+    position: relative;
+}
