@@ -3,6 +3,7 @@ const gameArea = document.querySelector(".game-area");
 const cardContainer = document.querySelector(".card-container");
 const startButton = document.querySelector(".start-button");
 const restartButton = document.querySelector(".restart-button");
+const retryButton = document.querySelector(".retry-button");
 const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
@@ -37,6 +38,12 @@ restartButton.addEventListener("click", () => {
   init();
 });
 
+retryButton.addEventListener("click", () => {
+  errorScreen.classList.add("hidden");
+
+  init();
+});
+
 function getSelectedLevel() {
   const selected = document.querySelector(".level:checked");
   return selected ? selected.value : "level-1";
@@ -51,6 +58,8 @@ function init() {
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
+    if (!data) return;
+
     cardsData = data;
     renderCards();
   });
@@ -77,9 +86,7 @@ async function fetchCardsData() {
   } catch (e) {
     console.error(e);
 
-    errorScreen.innerHTML = `
-      <h1>Failed to load cards...</h1>
-    `;
+    errorScreen.classList.remove("hidden");
   }
 }
 

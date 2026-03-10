@@ -108,6 +108,12 @@ body {
   box-shadow: 0 0 2.1875rem rgba(0, 150, 255, 0.9);
 }
 
+.retry-button {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: none;
+}
+
 .card {
   width: 100%;
   aspect-ratio: 2 / 1.8;
