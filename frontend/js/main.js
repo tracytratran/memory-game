@@ -1,16 +1,19 @@
 import { API_URL } from "./config.js";
-import { $, double, shuffle } from "./utils.js";
+import { createEl, getEl, double, shuffle } from "./utils.js";
 
-const mainMenu = $(".main-menu");
-const gameArea = $(".game-area");
-const cardContainer = $(".card-container");
-const startButton = $(".start-button");
-const restartButton = $(".restart-button");
-const counterEl = $("#move-counter");
-const timerEl = $("#timer");
+const mainMenu = getEl(".main-menu");
+const gameArea = getEl(".game-area");
+const cardContainer = getEl(".card-container");
+const mainMenuButton = getEl(".main-menu-button");
+const startButton = getEl(".start-button");
+const restartButton = getEl(".restart-button");
+const retryButton = getEl(".retry-button");
+const counterEl = getEl("#move-counter");
+const timerEl = getEl("#timer");
 const cards = document.querySelectorAll(".card");
-const winScreen = $(".win-screen");
-const loseScreen = $(".lose-screen");
+const winScreen = getEl(".win-screen");
+const loseScreen = getEl(".lose-screen");
+const errorScreen = getEl(".error-screen");
 
 let cardsData = [];
 let counter;
@@ -38,8 +41,18 @@ restartButton.addEventListener("click", () => {
   init();
 });
 
+retryButton.addEventListener("click", () => {
+  errorScreen.classList.add("hidden");
+
+  init();
+});
+
+mainMenuButton.addEventListener("click", () => {
+  location.reload();
+});
+
 function getSelectedLevel() {
-  const selected = document.querySelector(".level:checked");
+  const selected = getEl(".level:checked");
   return selected ? selected.value : "level-1";
 }
 
@@ -52,6 +65,8 @@ function init() {
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
+    if (!data) return;
+
     cardsData = data;
     renderCards();
   });
@@ -74,7 +89,9 @@ async function fetchCardsData() {
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
-    console.log(e);
+    console.error(e);
+
+    errorScreen.classList.remove("hidden");
   }
 }
 
@@ -83,16 +100,16 @@ function renderCards() {
 
   cardsData.forEach((card, index) => {
     // main div
-    const cardElement = document.createElement("div");
+    const cardElement = createEl("div");
     cardElement.classList.add("card");
     cardElement.id = `card-${index}`;
 
     // front side
-    const cardFrontSideElement = document.createElement("div");
+    const cardFrontSideElement = createEl("div");
     cardFrontSideElement.classList.add("front-side");
 
     // frontside img
-    const cardFrontSideImgElement = document.createElement("img");
+    const cardFrontSideImgElement = createEl("img");
     cardFrontSideImgElement.src =
       getSelectedLevel() === "level-2"
         ? "../assets/images/level-2-card-background.webp"
@@ -100,11 +117,11 @@ function renderCards() {
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
-    const cardBackSideElement = document.createElement("div");
+    const cardBackSideElement = createEl("div");
     cardBackSideElement.classList.add("back-side");
 
     // backside img
-    const cardBackSideImgElement = document.createElement("img");
+    const cardBackSideImgElement = createEl("img");
     cardBackSideImgElement.src = card.name;
     cardBackSideImgElement.alt = `Card backside ${index}`;
 
@@ -139,15 +156,15 @@ function handleCardClick(event) {
     return;
   }
 
-  startTimer();
-
-  if (!card.classList.contains("flipped")) {
-    increaseCounter();
-  }
-
-  card.classList.toggle("flipped");
   const cardIndex = card.id.split("-")[1];
-  cardsData[cardIndex].isOpen = !cardsData[cardIndex].isOpen;
+  const cardState = cardsData[cardIndex];
+
+  if (cardState.isOpen || cardState.isMatched) return;
+
+  card.classList.add("flipped");
+  cardState.isOpen = true;
+  startTimer();
+  increaseCounter();
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
@@ -211,7 +228,7 @@ function checkAndHideMatchedCards(openCardIndex) {
   ) {
     setTimeout(() => {
       openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.add("matched");
+        getEl(`#card-${index}`).classList.add("matched");
         cardsData[index].isOpen = false;
         cardsData[index].isMatched = true;
       });
@@ -247,7 +264,7 @@ function closeUnmatchedCards(openCardIndex) {
   ) {
     setTimeout(function () {
       openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.toggle("flipped");
+        getEl(`#card-${index}`).classList.remove("flipped");
         cardsData[index].isOpen = false;
       });
     }, 1000);
