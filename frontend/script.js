@@ -8,7 +8,6 @@ const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
 const loseScreen = document.querySelector(".lose-screen");
-const timeLimit = 60;
 
 let cardsData = [];
 let counter;
@@ -67,7 +66,7 @@ async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
     const response = await fetch(
-      `https://memoga.onrender.com/api/cards?category=${level}`,
+      `${window.APP_CONFIG.API_URL}/api/cards?category=${level}`,
     );
     const data = await response.json();
 
@@ -186,13 +185,11 @@ function increaseCounter() {
 function startTimer() {
   if (intervalID !== null) return;
 
-  if (intervalID === null) {
-    intervalID = setInterval(function () {
-      timer--;
-      timerEl.textContent = timer;
-      checkLosingCondition();
-    }, 1000);
-  }
+  intervalID = setInterval(function () {
+    timer--;
+    timerEl.textContent = timer;
+    checkLosingCondition();
+  }, 1000);
 }
 
 function stopTimer() {
@@ -258,7 +255,7 @@ function checkWinningCondition() {
       <h1>🎉 You Win! 🎉</h1>
        <img src="../assets/images/yay-moinyin.gif" alt="Minions Celebrate" class="win-minion-gif" />
       <p class="win-stats">You finished in ${counter} moves</p>
-      <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
+      <p class="win-stats">Time taken: ${getTimeLimit() - timer} seconds</p>
     `;
 
     winScreen.classList.remove("hidden");
