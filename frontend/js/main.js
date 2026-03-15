@@ -1,16 +1,19 @@
-const mainMenu = document.querySelector(".main-menu");
-const gameArea = document.querySelector(".game-area");
-const cardContainer = document.querySelector(".card-container");
-const mainMenuButton = document.querySelector(".main-menu-button");
-const startButton = document.querySelector(".start-button");
-const restartButton = document.querySelector(".restart-button");
-const retryButton = document.querySelector(".retry-button");
-const counterEl = document.querySelector("#move-counter");
-const timerEl = document.querySelector("#timer");
+import { API_URL } from "./config.js";
+import { createEl, getEl, double, shuffle } from "./utils.js";
+
+const mainMenu = getEl(".main-menu");
+const gameArea = getEl(".game-area");
+const cardContainer = getEl(".card-container");
+const mainMenuButton = getEl(".main-menu-button");
+const startButton = getEl(".start-button");
+const restartButton = getEl(".restart-button");
+const retryButton = getEl(".retry-button");
+const counterEl = getEl("#move-counter");
+const timerEl = getEl("#timer");
 const cards = document.querySelectorAll(".card");
-const winScreen = document.querySelector(".win-screen");
-const loseScreen = document.querySelector(".lose-screen");
-const errorScreen = document.querySelector(".error-screen");
+const winScreen = getEl(".win-screen");
+const loseScreen = getEl(".lose-screen");
+const errorScreen = getEl(".error-screen");
 
 let cardsData = [];
 let counter;
@@ -49,7 +52,7 @@ mainMenuButton.addEventListener("click", () => {
 });
 
 function getSelectedLevel() {
-  const selected = document.querySelector(".level:checked");
+  const selected = getEl(".level:checked");
   return selected ? selected.value : "level-1";
 }
 
@@ -80,9 +83,7 @@ function cleanUp() {
 async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
-    const response = await fetch(
-      `${window.APP_CONFIG.API_URL}/api/cards?category=${level}`,
-    );
+    const response = await fetch(`${API_URL}/api/cards?category=${level}`);
     const data = await response.json();
 
     const shuffledCards = shuffle(double(data));
@@ -99,16 +100,16 @@ function renderCards() {
 
   cardsData.forEach((card, index) => {
     // main div
-    const cardElement = document.createElement("div");
+    const cardElement = createEl("div");
     cardElement.classList.add("card");
     cardElement.id = `card-${index}`;
 
     // front side
-    const cardFrontSideElement = document.createElement("div");
+    const cardFrontSideElement = createEl("div");
     cardFrontSideElement.classList.add("front-side");
 
     // frontside img
-    const cardFrontSideImgElement = document.createElement("img");
+    const cardFrontSideImgElement = createEl("img");
     cardFrontSideImgElement.src =
       getSelectedLevel() === "level-2"
         ? "../assets/images/level-2-card-background.webp"
@@ -116,11 +117,11 @@ function renderCards() {
     cardFrontSideImgElement.alt = "Card front side";
 
     // back side
-    const cardBackSideElement = document.createElement("div");
+    const cardBackSideElement = createEl("div");
     cardBackSideElement.classList.add("back-side");
 
     // backside img
-    const cardBackSideImgElement = document.createElement("img");
+    const cardBackSideImgElement = createEl("img");
     cardBackSideImgElement.src = card.name;
     cardBackSideImgElement.alt = `Card backside ${index}`;
 
@@ -167,31 +168,6 @@ function handleCardClick(event) {
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
-}
-
-function double(arr) {
-  if (!arr) throw new Error("Invalid input!");
-
-  const copiedArr = JSON.parse(JSON.stringify(arr));
-  return [...arr, ...copiedArr];
-}
-
-function shuffle(arr) {
-  if (!arr) throw new Error("Invalid input!");
-
-  const shuffledArr = arr
-    .map(function (card) {
-      card.randomID = Math.random();
-      return card;
-    })
-    .toSorted(function (a, b) {
-      return a.randomID > b.randomID ? 1 : -1;
-    })
-    .map(function (card) {
-      delete card.randomID;
-      return card;
-    });
-  return shuffledArr;
 }
 
 function increaseCounter() {
@@ -252,7 +228,7 @@ function checkAndHideMatchedCards(openCardIndex) {
   ) {
     setTimeout(() => {
       openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.add("matched");
+        getEl(`#card-${index}`).classList.add("matched");
         cardsData[index].isOpen = false;
         cardsData[index].isMatched = true;
       });
@@ -288,7 +264,7 @@ function closeUnmatchedCards(openCardIndex) {
   ) {
     setTimeout(function () {
       openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.remove("flipped");
+        getEl(`#card-${index}`).classList.remove("flipped");
         cardsData[index].isOpen = false;
       });
     }, 1000);
