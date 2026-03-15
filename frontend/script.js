@@ -1,6 +1,7 @@
 const mainMenu = document.querySelector(".main-menu");
 const gameArea = document.querySelector(".game-area");
 const cardContainer = document.querySelector(".card-container");
+const mainMenuButton = document.querySelector(".main-menu-button");
 const startButton = document.querySelector(".start-button");
 const restartButton = document.querySelector(".restart-button");
 const retryButton = document.querySelector(".retry-button");
@@ -10,7 +11,6 @@ const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
 const loseScreen = document.querySelector(".lose-screen");
 const errorScreen = document.querySelector(".error-screen");
-const timeLimit = 60;
 
 let cardsData = [];
 let counter;
@@ -42,6 +42,10 @@ retryButton.addEventListener("click", () => {
   errorScreen.classList.add("hidden");
 
   init();
+});
+
+mainMenuButton.addEventListener("click", () => {
+  location.reload();
 });
 
 function getSelectedLevel() {
@@ -77,7 +81,7 @@ async function fetchCardsData() {
   try {
     const level = getSelectedLevel();
     const response = await fetch(
-      `https://memoga.onrender.com/api/cards?category=${level}`,
+      `${window.APP_CONFIG.API_URL}/api/cards?category=${level}`,
     );
     const data = await response.json();
 
@@ -103,7 +107,7 @@ function renderCards() {
     const cardFrontSideElement = document.createElement("div");
     cardFrontSideElement.classList.add("front-side");
 
-    //frontside img
+    // frontside img
     const cardFrontSideImgElement = document.createElement("img");
     cardFrontSideImgElement.src =
       getSelectedLevel() === "level-2"
@@ -115,7 +119,7 @@ function renderCards() {
     const cardBackSideElement = document.createElement("div");
     cardBackSideElement.classList.add("back-side");
 
-    //backside img
+    // backside img
     const cardBackSideImgElement = document.createElement("img");
     cardBackSideImgElement.src = card.name;
     cardBackSideImgElement.alt = `Card backside ${index}`;
@@ -124,7 +128,7 @@ function renderCards() {
     cardFrontSideElement.appendChild(cardFrontSideImgElement);
     cardBackSideElement.appendChild(cardBackSideImgElement);
 
-    //append sides to card
+    // append sides to card
     cardElement.appendChild(cardFrontSideElement);
     cardElement.appendChild(cardBackSideElement);
 
@@ -151,15 +155,15 @@ function handleCardClick(event) {
     return;
   }
 
-  startTimer();
-
-  if (!card.classList.contains("flipped")) {
-    increaseCounter();
-  }
-
-  card.classList.toggle("flipped");
   const cardIndex = card.id.split("-")[1];
-  cardsData[cardIndex].isOpen = !cardsData[cardIndex].isOpen;
+  const cardState = cardsData[cardIndex];
+
+  if (cardState.isOpen || cardState.isMatched) return;
+
+  card.classList.add("flipped");
+  cardState.isOpen = true;
+  startTimer();
+  increaseCounter();
   const openCardIndexAfterFlipping = getOpenCardsIndex();
   checkAndHideMatchedCards(openCardIndexAfterFlipping);
   closeUnmatchedCards(openCardIndexAfterFlipping);
@@ -175,18 +179,18 @@ function double(arr) {
 function shuffle(arr) {
   if (!arr) throw new Error("Invalid input!");
 
-  const shuffledArr = [];
-  const generatedIndex = {};
-  let randomIndex;
-
-  for (const el of arr) {
-    do {
-      randomIndex = Math.floor(Math.random() * arr.length);
-    } while (generatedIndex[randomIndex]);
-
-    generatedIndex[randomIndex] = true;
-    shuffledArr[randomIndex] = el;
-  }
+  const shuffledArr = arr
+    .map(function (card) {
+      card.randomID = Math.random();
+      return card;
+    })
+    .toSorted(function (a, b) {
+      return a.randomID > b.randomID ? 1 : -1;
+    })
+    .map(function (card) {
+      delete card.randomID;
+      return card;
+    });
   return shuffledArr;
 }
 
@@ -198,13 +202,11 @@ function increaseCounter() {
 function startTimer() {
   if (intervalID !== null) return;
 
-  if (intervalID === null) {
-    intervalID = setInterval(function () {
-      timer--;
-      timerEl.textContent = timer;
-      checkLosingCondition();
-    }, 1000);
-  }
+  intervalID = setInterval(function () {
+    timer--;
+    timerEl.textContent = timer;
+    checkLosingCondition();
+  }, 1000);
 }
 
 function stopTimer() {
@@ -270,7 +272,7 @@ function checkWinningCondition() {
       <h1>🎉 You Win! 🎉</h1>
        <img src="../assets/images/yay-moinyin.gif" alt="Minions Celebrate" class="win-minion-gif" />
       <p class="win-stats">You finished in ${counter} moves</p>
-      <p class="win-stats">Time taken: ${timeLimit - timer} seconds</p>
+      <p class="win-stats">Time taken: ${getTimeLimit() - timer} seconds</p>
     `;
 
     winScreen.classList.remove("hidden");
@@ -286,7 +288,7 @@ function closeUnmatchedCards(openCardIndex) {
   ) {
     setTimeout(function () {
       openCardIndex.forEach((index) => {
-        document.querySelector(`#card-${index}`).classList.toggle("flipped");
+        document.querySelector(`#card-${index}`).classList.remove("flipped");
         cardsData[index].isOpen = false;
       });
     }, 1000);
