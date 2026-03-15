@@ -4,11 +4,13 @@ const cardContainer = document.querySelector(".card-container");
 const mainMenuButton = document.querySelector(".main-menu-button");
 const startButton = document.querySelector(".start-button");
 const restartButton = document.querySelector(".restart-button");
+const retryButton = document.querySelector(".retry-button");
 const counterEl = document.querySelector("#move-counter");
 const timerEl = document.querySelector("#timer");
 const cards = document.querySelectorAll(".card");
 const winScreen = document.querySelector(".win-screen");
 const loseScreen = document.querySelector(".lose-screen");
+const errorScreen = document.querySelector(".error-screen");
 
 let cardsData = [];
 let counter;
@@ -36,6 +38,12 @@ restartButton.addEventListener("click", () => {
   init();
 });
 
+retryButton.addEventListener("click", () => {
+  errorScreen.classList.add("hidden");
+
+  init();
+});
+
 mainMenuButton.addEventListener("click", () => {
   location.reload();
 });
@@ -54,6 +62,8 @@ function init() {
   timerEl.textContent = timer;
 
   fetchCardsData().then((data) => {
+    if (!data) return;
+
     cardsData = data;
     renderCards();
   });
@@ -78,7 +88,9 @@ async function fetchCardsData() {
     const shuffledCards = shuffle(double(data));
     return shuffledCards;
   } catch (e) {
-    console.log(e);
+    console.error(e);
+
+    errorScreen.classList.remove("hidden");
   }
 }
 
